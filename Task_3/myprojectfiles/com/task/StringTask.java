@@ -98,21 +98,21 @@ public class StringTask{
 	}
 
 	public String reverseString(String str){
-		String output="";
+		String outputStr="";
 		int start = str.length()-1;
 		for(int i=start;i>=0;i--){
-			output = output + str.charAt(i);
+			outputStr = outputStr + str.charAt(i);
 		}
-		return output;
+		return outputStr;
 	}
 
 	public String concWithoutSpace(String str){
 		String strArr [] = str.split(" ");
-		String output="";
+		String outputStr="";
 		for(String word :strArr){
-			output=output+word;
+			outputStr=outputStr+word;
 		}
-		return output;
+		return outputStr;
 	}
 
 	public String [] mulStrToStrArr(String str){
@@ -120,13 +120,13 @@ public class StringTask{
 	}
 
 	public String mergeStrWithHyphen(String []strArr){
-		String output="";
+		String outputStr="";
 		int i;
 		for(i=0;i<(strArr.length-1);i++){
-			output=output+strArr[i]+"-";
+			outputStr=outputStr+strArr[i]+"-";
 		}
-		output+=strArr[i];
-		return output;
+		outputStr+=strArr[i];
+		return outputStr;
 	}
 
 	public boolean checkEqualsCaseSensitive(String str1,String str2){

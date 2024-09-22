@@ -37,70 +37,70 @@ public class StringRunner{
 		System.out.print("Please enter the corresponding serial number to perform the requied function:");
 	}
 
-	public static void inputOutputHandler(String strArr[]){
+	public static void handleStringOperations(String strArr[]){
 		int choice=sc.nextInt();
 		
 		do{
 			switch(choice){
 				case 1:
-					lengthHandler(strArr);
+					handleLength(strArr);
 					break;	
 				case 2:
-					charArrayHandler();
+					handleCharArray();
 					break;
 				case 3:
-					penultimateHandler();
+					handlePenultimate();
 					break;
 				case 4:
-					countOfCharHandler();
+					handleCountOfChar();
 					break;
 				case 5:
-					greatestPositionHandler();
+					handleGreatestPosition();
 					break;
 				case 6:
-					printLastFiveHandler();
+					handlePrintLastFive();
 					break;
 				case 7:
-					printFirstThreeHandler();
+					handlePrintFirstThree();
 					break;
 				case 8:
-					replaceFirstThreeHandler();
+					handleReplaceFirstThree();
 					break;
 				case 9:
-					checkStartsWithHandler();
+					handleCheckStartsWith();
 					break;
 				case 10:
-					checkEndsWithHandler();
+					handleCheckEndsWith();
 					break;
 				case 11:
-					convertToUppercaseHandler();
+					handleConvertToUppercase();
 					break;
 				case 12:
-					convertToLowercaseHandler();
+					handleConvertToLowercase();
 					break;
 				case 13:
-					reverseStringHandler();
+					handleReverseString();
 					break;
 				case 14:
-					acceptMultipleStringHandler();
+					handleAcceptMultipleString();
 					break;
 				case 15:
-					concWithoutSpaceHandler();
+					handleConcWithoutSpace();
 					break;
 				case 16:
-					mulStrToStrArrHandler();
+					handleMulStrToStrArr();
 					break;
 				case 17:
-					mergeStrWithHyphenHandler();
+					handleMergeStrWithHyphen();
 					break;
 				case 18:
-					checkEqualsCaseSensitiveHandler();
+					handleCheckEqualsCaseSensitive();
 					break;
 				case 19:
-					checkEqualsInCaseSensitiveHandler();
+					handleCheckEqualsInCaseSensitive();
 					break;
 				case 20:
-					trimExtraSpaceHandler();
+					handleTrimExtraSpace();
 					break;
 
 			}
@@ -109,7 +109,7 @@ public class StringRunner{
 		}while(choice!=21);
 	}
 
-	public static void trimExtraSpaceHandler(){
+	public static void handleTrimExtraSpace(){
 		str = getSentenceFromUser();
 		System.out.println("The string before trimming : \""+str+"\"");
 		System.out.println("The length of the string before trimming: "+str.length());
@@ -118,7 +118,7 @@ public class StringRunner{
 		System.out.println("The length of the string after trimming: "+str.length());
 	}
 
-	public static void checkEqualsInCaseSensitiveHandler(){
+	public static void handleCheckEqualsInCaseSensitive(){
 		System.out.println("Enter the strings to check whether they are equal (case insensitive): ");
 		String str1 = getStringFromUser();
 		String str2 = getStringFromUser();
@@ -126,19 +126,19 @@ public class StringRunner{
 	}
 
 
-	public static void checkEqualsCaseSensitiveHandler(){
+	public static void handleCheckEqualsCaseSensitive(){
 		System.out.println("Enter the strings to check whether they are equal (case sensitive): ");
 		String str1 = getStringFromUser();
 		String str2 = getStringFromUser();
 		System.out.println(task.checkEqualsCaseSensitive(str1,str2));
 	}
 
-	public static void mergeStrWithHyphenHandler(){
+	public static void handleMergeStrWithHyphen(){
 		String strArr[] = getMulStrFromUser();
 		System.out.println("The string after merging with hypen:"+task.mergeStrWithHyphen(strArr));
 	}
 
-	public static void mulStrToStrArrHandler(){
+	public static void handleMulStrToStrArr(){
 		int i;
 		str=getSentenceFromUser();
 		String strArr[]=task.mulStrToStrArr(str);
@@ -150,32 +150,32 @@ public class StringRunner{
 	}
 
 
-	public static void concWithoutSpaceHandler(){
+	public static void handleConcWithoutSpace(){
 		str=getSentenceFromUser();
 		System.out.println("After concatenation of strings without space: "+task.concWithoutSpace(str));
 	}
 
-	public static void acceptMultipleStringHandler(){
+	public static void handleAcceptMultipleString(){
 		str=getSentenceFromUser();
 		System.out.println("You entered: "+str);
 	}
 
-	public static void reverseStringHandler(){
+	public static void handleReverseString(){
 		str = getStringFromUser();
 		System.out.println(str+"->"+task.reverseString(str));
 	}
 
-	public static void convertToLowercaseHandler(){
+	public static void handleConvertToLowercase(){
 		str = getStringFromUser();
 		System.out.println(str+"->"+task.convertToLowercase(str));
 	}
 
-	public static void convertToUppercaseHandler(){
+	public static void handleConvertToUppercase(){
 		str = getStringFromUser();
 		System.out.println(str+"->"+task.convertToUppercase(str));
 	}
 
-	public static void checkEndsWithHandler(){
+	public static void handleCheckEndsWith(){
 		str = getStringFromUser();
 		boolean ans = task.checkEndsWith(str,"le");
 		if(ans == true ){
@@ -186,7 +186,7 @@ public class StringRunner{
 		}
 	}
 
-	public static void checkStartsWithHandler(){
+	public static void handleCheckStartsWith(){
 		str = getStringFromUser();
 		boolean ans = task.checkStartsWith(str,"ent");
 		if(ans == true ){
@@ -197,7 +197,7 @@ public class StringRunner{
 		}
 	}
 
-	public static void replaceFirstThreeHandler(){
+	public static void handleReplaceFirstThree(){
 		str = getStringFromUser();
 		String outputStr = task.replaceFirstThree(str);
 		if(outputStr != null ){
@@ -209,7 +209,7 @@ public class StringRunner{
 	}
 
 
-	public static void printFirstThreeHandler(){
+	public static void handlePrintFirstThree(){
 		str = getStringFromUser();
 		String outputStr = task.printFirstThree(str);
 		if(outputStr != null ){
@@ -220,7 +220,7 @@ public class StringRunner{
 		}
 	}
 
-	public static void printLastFiveHandler(){
+	public static void  handlePrintLastFive(){
 		str = getStringFromUser();
 		String outputStr = task.printLastFive(str);
 		if(outputStr != null ){
@@ -231,7 +231,7 @@ public class StringRunner{
 		}
 	}
 
-	public static void greatestPositionHandler(){
+	public static void handleGreatestPosition(){
 		str =  getStringFromUser();
 		char choice = 'y';
 		while(choice == 'y'){
@@ -249,7 +249,7 @@ public class StringRunner{
 		
 	}
 
-	public static void countOfCharHandler(){
+	public static void  handleCountOfChar(){
 		str =  getStringFromUser();
 		char choice = 'y';
 		while(choice == 'y'){
@@ -262,18 +262,18 @@ public class StringRunner{
 
 	}
 
-	public static void penultimateHandler(){
+	public static void handlePenultimate(){
 		str = getStringFromUser();
 		char penultimateChar = task.penultimate(str);
 		if(penultimateChar != '\0'){
 			System.out.println("The penultimate character of the string "+str+" is "+penultimateChar);
 		}
 		else{
-			System.out.println("String is too small to find penultimate character, try giving string size greater than 3");
+			System.out.println("String is too small to find penultimate character, try giving string size greater than 2");
 		}
 	}
 
-	public static void charArrayHandler(){
+	public static void handleCharArray(){
 		str = getStringFromUser();
 		char[] charArray = task.convertToCharArray(str);
 		System.out.println(str+" on converting to character array... ");
@@ -283,7 +283,7 @@ public class StringRunner{
 		System.out.println();
 	}
 
-	public static void lengthHandler(String strArr[]){
+	public static void handleLength(String strArr[]){
 		int length=task.checkCmdArgs(strArr);
 		if(length!=-1){
 			System.out.println("The length of the string "+strArr[0]+" = "+length);
@@ -322,6 +322,6 @@ public class StringRunner{
 
 	public static void main (String args[]){
 		printChoiceList();
-		inputOutputHandler(args);
+		handleStringOperations(args);
 	}
 }
