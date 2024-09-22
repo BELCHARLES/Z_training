@@ -3,25 +3,25 @@ package  com.runner;
 import com.task.*;
 import java.util.*;
 
-public class Runner{
+public class StringRunner{
 
-	static Task task = new Task();
+	static StringTask task = new StringTask();
 	static Scanner sc = new Scanner(System.in);
 	static String str;
 	static char letter;
 	
 
 	public static void printChoiceList(){
-		System.out.println("S.no Functions");
-		System.out.println("1.  Find the length of a String");
-		System.out.println("2.  Convert string  into character Array");
-		System.out.println("3.  Find penultimate character");
-		System.out.println("4.  Find the number of occurrences of a given letter/character");
-		System.out.println("5.  Find the greatest position of the given letter/character.");
-		System.out.println("6.  Print the last 5 characters of a given String.");
-		System.out.println("7.  Print the first 3 characters of a given String");
-		System.out.println("8.  Replace the first 3 characters of a String with \"XYZ\" ");
-		System.out.println("9.  Check whether a String starts with \"ent\" ");
+		System.out.println("\nS.no Functions");
+		System.out.println("1.   Find the length of a String");
+		System.out.println("2.   Convert string  into character Array");
+		System.out.println("3.   Find penultimate character");
+		System.out.println("4.   Find the number of occurrences of a given letter/character");
+		System.out.println("5.   Find the greatest position of the given letter/character.");
+		System.out.println("6.   Print the last 5 characters of a given String.");
+		System.out.println("7.   Print the first 3 characters of a given String");
+		System.out.println("8.   Replace the first 3 characters of a String with \"XYZ\" ");
+		System.out.println("9.   Check whether a String starts with \"ent\" ");
 		System.out.println("10.  Check whether a String ends with \"le\" ");
 		System.out.println("11.  Convert all lowercase string to uppercase string");
 		System.out.println("12.  Convert all uppercase string to lowercase string");
@@ -33,8 +33,8 @@ public class Runner{
 		System.out.println("18.  Check equality of 2 strings - Case sensitive");
 		System.out.println("19.  Check equality of 2 strings - Case insensitive");
 		System.out.println("20.  String with a space at the end & beginning or both and output the proper String with no space either at the beginning or end");
-		System.out.println("21. Exit");
-		System.out.println("Please enter the corresponding serial number to perform the requied function:");
+		System.out.println("21.  Exit");
+		System.out.print("Please enter the corresponding serial number to perform the requied function:");
 	}
 
 	public static void inputOutputHandler(String strArr[]){
@@ -213,7 +213,7 @@ public class Runner{
 		str = getStringFromUser();
 		String outputStr = task.printFirstThree(str);
 		if(outputStr != null ){
-			System.out.println("The first 3 characters of the string "+str+" are "+outputStr);
+			System.out.println("The first 3 characters of the string "+str+" is "+outputStr);
 		}
 		else{
 			System.out.println("String is too small to print the first three characters, try giving string size atleast greater than 2");
@@ -224,7 +224,7 @@ public class Runner{
 		str = getStringFromUser();
 		String outputStr = task.printLastFive(str);
 		if(outputStr != null ){
-			System.out.println("The last 5 characters of the string "+str+" are "+outputStr);
+			System.out.println("The last 5 characters of the string "+str+" is "+outputStr);
 		}
 		else{
 			System.out.println("String is too small to print the last five characters, try giving string size atleast greater than 4");
@@ -243,7 +243,7 @@ public class Runner{
 			else{
 				System.out.println("Character "+letter+" is not found in the string "+str );
 			}
-			System.out.println("Do you want to check for another letter/character (Enter 'y' for yes and 'n' for no) :");
+			System.out.print("Do you want to check for another letter/character (Enter 'y' for yes and 'n' for no) :");
 			choice = sc.next().charAt(0);
 		}
 		
@@ -252,11 +252,11 @@ public class Runner{
 	public static void countOfCharHandler(){
 		str =  getStringFromUser();
 		char choice = 'y';
-		System.out.println(choice);
 		while(choice == 'y'){
 			letter = getCharFromUser();
 			int count = task.countOfChar(str,letter);
-			System.out.println("The  number of occurrences of "+letter+" in the string "+str+" is "+count);						    			         	System.out.println("Do you want to check for another letter/character (Enter 'y' for yes and 'n' for no) :");
+			System.out.println("The  number of occurrences of "+letter+" in the string "+str+" is "+count);						    			         	
+			System.out.print("Do you want to check for another letter/character (Enter 'y' for yes and 'n' for no) :");
 			choice = sc.next().charAt(0);
 		}
 
@@ -266,7 +266,7 @@ public class Runner{
 		str = getStringFromUser();
 		char penultimateChar = task.penultimate(str);
 		if(penultimateChar != '\0'){
-			System.out.println("The penultimate character of the string "+str+"is "+penultimateChar);
+			System.out.println("The penultimate character of the string "+str+" is "+penultimateChar);
 		}
 		else{
 			System.out.println("String is too small to find penultimate character, try giving string size greater than 3");
@@ -316,7 +316,7 @@ public class Runner{
 	}
 
 	public static char getCharFromUser(){
-		System.out.println("Enter the character :");
+		System.out.print("Enter the character :");
 		return sc.next().charAt(0);
 	}
 

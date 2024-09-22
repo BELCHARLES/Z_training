@@ -1,6 +1,6 @@
 package com.task;
 
-public class Task{
+public class StringTask{
 	public int checkCmdArgs(String str[]){
 		if(str.length > 0){
 			return findLength(str[0]);
