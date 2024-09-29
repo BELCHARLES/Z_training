@@ -1,35 +1,36 @@
-package  com.runner;
+package com.runner;
 
+import com.exception.*;
 import com.task.*;
 import java.util.*;
 
-public class StringRunner{
+public class StringRunner {
 
 	static StringTask task = new StringTask();
 	static Scanner sc = new Scanner(System.in);
 	static String str;
 	static char letter;
-	
+	static int n;
 
-	public static void printChoiceList(){
+	public static void printChoiceList() {
 		System.out.println("\nS.no Functions");
 		System.out.println("1.   Find the length of a String");
 		System.out.println("2.   Convert string  into character Array");
 		System.out.println("3.   Find penultimate character");
 		System.out.println("4.   Find the number of occurrences of a given letter/character");
 		System.out.println("5.   Find the greatest position of the given letter/character.");
-		System.out.println("6.   Print the last 5 characters of a given String.");
-		System.out.println("7.   Print the first 3 characters of a given String");
-		System.out.println("8.   Replace the first 3 characters of a String with \"XYZ\" ");
-		System.out.println("9.   Check whether a String starts with \"ent\" ");
-		System.out.println("10.  Check whether a String ends with \"le\" ");
+		System.out.println("6.   Print the last 'n' characters of a given String.");
+		System.out.println("7.   Print the first 'n' characters of a given String");
+		System.out.println("8.   Replace the first 'n' characters of a String with the given string");
+		System.out.println("9.   Check whether a String starts with the given string ");
+		System.out.println("10.  Check whether a String ends with the given string");
 		System.out.println("11.  Convert all lowercase string to uppercase string");
 		System.out.println("12.  Convert all uppercase string to lowercase string");
 		System.out.println("13.  Reverse a String");
 		System.out.println("14.  Accept a line with multiple Strings");
-		System.out.println("15.  Concatenate multiple strings without space");
+		System.out.println("15.  Concatenate multiple strings without given character");
 		System.out.println("16.  Multiple strings to string array");
-		System.out.println("17.  Merge multipe strings with \"-\" in between");
+		System.out.println("17.  Merge multipe strings with the given character  in between");
 		System.out.println("18.  Check equality of 2 strings - Case sensitive");
 		System.out.println("19.  Check equality of 2 strings - Case insensitive");
 		System.out.println("20.  String with a space at the end & beginning or both and output the proper String with no space either at the beginning or end");
@@ -37,14 +38,14 @@ public class StringRunner{
 		System.out.print("Please enter the corresponding serial number to perform the requied function:");
 	}
 
-	public static void handleStringOperations(String strArr[]){
-		int choice=sc.nextInt();
-		
-		do{
-			switch(choice){
+	public static void handleStringOperations(String strArr[]) {
+		int choice = sc.nextInt();
+
+		do {
+			switch (choice) {
 				case 1:
 					handleLength(strArr);
-					break;	
+					break;
 				case 2:
 					handleCharArray();
 					break;
@@ -58,13 +59,13 @@ public class StringRunner{
 					handleGreatestPosition();
 					break;
 				case 6:
-					handlePrintLastFive();
+					handlePrintLastNChar();
 					break;
 				case 7:
-					handlePrintFirstThree();
+					handlePrintFirstNChar();
 					break;
 				case 8:
-					handleReplaceFirstThree();
+					handleReplaceFirstNChar();
 					break;
 				case 9:
 					handleCheckStartsWith();
@@ -85,13 +86,13 @@ public class StringRunner{
 					handleAcceptMultipleString();
 					break;
 				case 15:
-					handleConcWithoutSpace();
+					handleConcWithoutGivenChar();
 					break;
 				case 16:
 					handleMulStrToStrArr();
 					break;
 				case 17:
-					handleMergeStrWithHyphen();
+					handleMergeStrWithChar();
 					break;
 				case 18:
 					handleCheckEqualsCaseSensitive();
@@ -106,221 +107,328 @@ public class StringRunner{
 			}
 			printChoiceList();
 			choice = sc.nextInt();
-		}while(choice!=21);
+		} while (choice != 21);
 	}
 
-	public static void handleTrimExtraSpace(){
-		str = getSentenceFromUser();
-		System.out.println("The string before trimming : \""+str+"\"");
-		System.out.println("The length of the string before trimming: "+str.length());
-		str = task.trimExtraSpace(str);
-		System.out.println("The string after trimming: \""+str+"\"");
-		System.out.println("The length of the string after trimming: "+str.length());
-	}
+	public static void handleTrimExtraSpace() {
+		try {
+			str = getSentenceFromUser();
 
-	public static void handleCheckEqualsInCaseSensitive(){
-		System.out.println("Enter the strings to check whether they are equal (case insensitive): ");
-		String str1 = getStringFromUser();
-		String str2 = getStringFromUser();
-		System.out.println(task.checkEqualsInCaseSensitive(str1,str2));
-	}
+			String str1 = task.trimExtraSpace(str);
+			System.out.println("The string before trimming : \"" + str + "\"");
+			System.out.println("The length of the string before trimming: " + str.length());
 
-
-	public static void handleCheckEqualsCaseSensitive(){
-		System.out.println("Enter the strings to check whether they are equal (case sensitive): ");
-		String str1 = getStringFromUser();
-		String str2 = getStringFromUser();
-		System.out.println(task.checkEqualsCaseSensitive(str1,str2));
-	}
-
-	public static void handleMergeStrWithHyphen(){
-		String strArr[] = getMulStrFromUser();
-		System.out.println("The string after merging with hypen:"+task.mergeStrWithHyphen(strArr));
-	}
-
-	public static void handleMulStrToStrArr(){
-		int i;
-		str=getSentenceFromUser();
-		String strArr[]=task.mulStrToStrArr(str);
-		System.out.print("The string array : {");
-		for( i=0;i<strArr.length-1;i++){
-			System.out.print("\""+strArr[i]+"\",");
+			System.out.println("The string after trimming: \"" + str1 + "\"");
+			System.out.println("The length of the string after trimming: " + str1.length());
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
 		}
-		System.out.println("\""+strArr[i]+"\"}");
+
 	}
 
-
-	public static void handleConcWithoutSpace(){
-		str=getSentenceFromUser();
-		System.out.println("After concatenation of strings without space: "+task.concWithoutSpace(str));
-	}
-
-	public static void handleAcceptMultipleString(){
-		str=getSentenceFromUser();
-		System.out.println("You entered: "+str);
-	}
-
-	public static void handleReverseString(){
-		str = getStringFromUser();
-		System.out.println(str+"->"+task.reverseString(str));
-	}
-
-	public static void handleConvertToLowercase(){
-		str = getStringFromUser();
-		System.out.println(str+"->"+task.convertToLowercase(str));
-	}
-
-	public static void handleConvertToUppercase(){
-		str = getStringFromUser();
-		System.out.println(str+"->"+task.convertToUppercase(str));
-	}
-
-	public static void handleCheckEndsWith(){
-		str = getStringFromUser();
-		boolean ans = task.checkEndsWith(str,"le");
-		if(ans == true ){
-			System.out.println("The String "+str+" ends with \"le\"");
+	public static void handleCheckEqualsInCaseSensitive() {
+		try {
+			System.out.println("Enter the strings to check whether they are equal (case insensitive): ");
+			String str1 = getStringFromUser();
+			String str2 = getStringFromUser();
+			System.out.println(task.checkEqualsInCaseSensitive(str1, str2));
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
 		}
-		else{
-			System.out.println("The String "+str+" does not end with \"le\"");
-		}
+
 	}
 
-	public static void handleCheckStartsWith(){
-		str = getStringFromUser();
-		boolean ans = task.checkStartsWith(str,"ent");
-		if(ans == true ){
-			System.out.println("The String "+str+" starts with \"ent\"");
+	public static void handleCheckEqualsCaseSensitive() {
+		try {
+			System.out.println("Enter the strings to check whether they are equal (case sensitive): ");
+			String str1 = getStringFromUser();
+			String str2 = getStringFromUser();
+			System.out.println(task.checkEqualsCaseSensitive(str1, str2));
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
 		}
-		else{
-			System.out.println("The String "+str+" does not start with \"ent\"");
-		}
+
 	}
 
-	public static void handleReplaceFirstThree(){
-		str = getStringFromUser();
-		String outputStr = task.replaceFirstThree(str);
-		if(outputStr != null ){
-			System.out.println("On replacing the first three characters of the string "+str+" with XYZ, it became  "+outputStr);
-		}
-		else{
-			System.out.println("String is too small to replace the first three characters, try giving string size atleast greater than 2");
-		}
-	}
-
-
-	public static void handlePrintFirstThree(){
-		str = getStringFromUser();
-		String outputStr = task.printFirstThree(str);
-		if(outputStr != null ){
-			System.out.println("The first 3 characters of the string "+str+" is "+outputStr);
-		}
-		else{
-			System.out.println("String is too small to print the first three characters, try giving string size atleast greater than 2");
-		}
-	}
-
-	public static void  handlePrintLastFive(){
-		str = getStringFromUser();
-		String outputStr = task.printLastFive(str);
-		if(outputStr != null ){
-			System.out.println("The last 5 characters of the string "+str+" is "+outputStr);
-		}
-		else{
-			System.out.println("String is too small to print the last five characters, try giving string size atleast greater than 4");
-		}
-	}
-
-	public static void handleGreatestPosition(){
-		str =  getStringFromUser();
-		char choice = 'y';
-		while(choice == 'y'){
+	public static void handleMergeStrWithChar() {
+		try {
+			String strArr[] = getMulStrFromUser();
+			System.out.println("Enter the character to merge with:");
 			letter = getCharFromUser();
-			int index = task.greatestPosOfChar(str,letter);
-			if(index!=-1){
-				System.out.println("The greatest position of  "+letter+" in the string "+str+" is "+(index+1));
-			}
-			else{
-				System.out.println("Character "+letter+" is not found in the string "+str );
-			}
-			System.out.print("Do you want to check for another letter/character (Enter 'y' for yes and 'n' for no) :");
-			choice = sc.next().charAt(0);
+			System.out.println("The string after merging:" + task.mergeStrWithChar(strArr, letter));
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
 		}
-		
+
 	}
 
-	public static void  handleCountOfChar(){
-		str =  getStringFromUser();
-		char choice = 'y';
-		while(choice == 'y'){
+	public static void handleMulStrToStrArr() {
+		try {
+			int i;
+			str = getSentenceFromUser();
+			String strArr[] = task.mulStrToStrArr(str);
+			System.out.print("The string array : {");
+			for (i = 0; i < strArr.length - 1; i++) {
+				System.out.print("\"" + strArr[i] + "\",");
+			}
+			System.out.println("\"" + strArr[i] + "\"}");
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	public static void handleConcWithoutGivenChar() {
+		try {
+			str = getSentenceFromUser();
 			letter = getCharFromUser();
-			int count = task.countOfChar(str,letter);
-			System.out.println("The  number of occurrences of "+letter+" in the string "+str+" is "+count);						    			         	
-			System.out.print("Do you want to check for another letter/character (Enter 'y' for yes and 'n' for no) :");
-			choice = sc.next().charAt(0);
+			System.out.print("After concatenation of strings without " + letter + ":");
+			ArrayList<Character> charArray = task.concWithoutGivenChar(str, letter);
+			for (Character c : charArray) {
+				System.out.print(c);
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
 		}
 
 	}
 
-	public static void handlePenultimate(){
-		str = getStringFromUser();
-		char penultimateChar = task.penultimate(str);
-		if(penultimateChar != '\0'){
-			System.out.println("The penultimate character of the string "+str+" is "+penultimateChar);
+	public static void handleAcceptMultipleString() {
+		try {
+			str = getSentenceFromUser();
+			System.out.println("You entered: " + str);
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
 		}
-		else{
-			System.out.println("String is too small to find penultimate character, try giving string size greater than 2");
+
+	}
+
+	public static void handleReverseString() {
+		try {
+			str = getStringFromUser();
+			System.out.println(str + "->" + task.reverseString(str));
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	public static void handleConvertToLowercase() {
+		try {
+			str = getStringFromUser();
+			System.out.println(str + "->" + task.convertToLowercase(str));
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	public static void handleConvertToUppercase() {
+		try {
+			str = getStringFromUser();
+			System.out.println(str + "->" + task.convertToUppercase(str));
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	public static void handleCheckEndsWith() {
+		try {
+			str = getStringFromUser();
+			System.out.println("Enter the string to check for:");
+			String ender = getStringFromUser();
+			boolean ans = task.checkEndsWith(str, ender);
+			if (ans == true) {
+				System.out.println("The String " + str + " ends with " + ender);
+			} else {
+				System.out.println("The String " + str + " does not end with " + ender);
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	public static void handleCheckStartsWith() {
+		try {
+			str = getStringFromUser();
+			System.out.println("Enter the string to check for:");
+			String starter = getStringFromUser();
+			boolean ans = task.checkStartsWith(str, starter);
+			if (ans == true) {
+				System.out.println("The String " + str + " starts with " + starter);
+			} else {
+				System.out.println("The String " + str + " does not start with " + starter);
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	public static void handleReplaceFirstNChar() {
+		try {
+			str = getStringFromUser();
+			System.out.println("Enter the number of characters");
+			n = getIntFromUser();
+			System.out.println("Enter the string to be replaced with:");
+			String repStr = getStringFromUser();
+			String outputStr = task.replaceFirstNChar(str, n, repStr);
+			System.out.println("On replacing the first " + n + " characters of the string " + str + " with " + repStr
+					+ " , it became  " + outputStr);
+		} catch (InsufficientLengthException e) {
+			System.out.println(e.getMessage());
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		} catch (InvalidArgumentException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
-	public static void handleCharArray(){
-		str = getStringFromUser();
-		char[] charArray = task.convertToCharArray(str);
-		System.out.println(str+" on converting to character array... ");
-		for(char c :charArray){
-			System.out.print(c+" ");
+	public static void handlePrintFirstNChar() {
+		try {
+			str = getStringFromUser();
+			System.out.println("Enter the number of characters");
+			n = getIntFromUser();
+			String outputStr = task.printFirstNChar(str, n);
+			System.out.println("The first " + n + " characters of the string " + str + " is " + outputStr);
+		} catch (InsufficientLengthException e) {
+			System.out.println(e.getMessage());
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		} catch (InvalidArgumentException e) {
+			System.out.println(e.getMessage());
 		}
-		System.out.println();
+
 	}
 
-	public static void handleLength(String strArr[]){
-		int length=task.checkCmdArgs(strArr);
-		if(length!=-1){
-			System.out.println("The length of the string "+strArr[0]+" = "+length);
-		}
-		else{
-			System.out.println("No string provided as command line argument ,try running the file again with the arguments");
+	public static void handlePrintLastNChar() {
+		try {
+			str = getStringFromUser();
+			System.out.println("Enter the number of characters");
+			n = getIntFromUser();
+			String outputStr = task.printLastNChar(str, n);
+			System.out.println("The last " + n + " characters of the string " + str + " is " + outputStr);
+		} catch (InsufficientLengthException e) {
+			System.out.println(e.getMessage());
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		} catch (InvalidArgumentException e) {
+			System.out.println(e.getMessage());
 		}
 	}
-	
-	public static String getStringFromUser(){
+
+	public static void handleGreatestPosition() {
+		try {
+			str = getStringFromUser();
+			char choice = 'y';
+			while (choice == 'y') {
+				letter = getCharFromUser();
+				int index = task.greatestPosOfChar(str, letter);
+				if (index != -1) {
+					System.out.println("The greatest position of  " + letter + " in the string " + str + " is " + (index + 1));
+				} else {
+					System.out.println("Character " + letter + " is not found in the string " + str);
+				}
+				System.out.print("Do you want to check for another letter/character (Enter 'y' for yes and 'n' for no) :");
+				choice = sc.next().charAt(0);
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	public static void handleCountOfChar() {
+		try {
+			str = getStringFromUser();
+			char choice = 'y';
+			while (choice == 'y') {
+				letter = getCharFromUser();
+				int count = task.countOfChar(str, letter);
+				System.out.println("The  number of occurrences of " + letter + " in the string " + str + " is " + count);
+				System.out.print("Do you want to check for another letter/character (Enter 'y' for yes and 'n' for no) :");
+				choice = sc.next().charAt(0);
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	public static void handlePenultimate() {
+		try {
+			str = getStringFromUser();
+			char penultimateChar = task.penultimate(str);
+			System.out.println("The penultimate character of the string " + str + " is " + penultimateChar);
+		} catch (InsufficientLengthException e) {
+			System.out.println(e.getMessage());
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	public static void handleCharArray() {
+		try {
+			str = getStringFromUser();
+			char[] charArray = task.convertToCharArray(str);
+			System.out.println(str + " on converting to character array... ");
+			for (char c : charArray) {
+				System.out.print(c + " ");
+			}
+			System.out.println();
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	public static void handleLength(String strArr[]) {
+		try {
+			int length = task.checkCmdArgs(strArr);
+			System.out.println("The length of the string " + strArr[0] + " = " + length);
+		} catch (InsufficientLengthException e) {
+			System.out.println(e.getMessage());
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public static String getStringFromUser() {
 		System.out.print("Enter the string :");
 		return sc.next();
 	}
 
-	public static String getSentenceFromUser(){
+	public static String getSentenceFromUser() {
 		System.out.print("Enter the string :");
 		sc.nextLine();
 		return sc.nextLine();
 	}
 
-	public static String[] getMulStrFromUser(){
+	public static String[] getMulStrFromUser() {
 		System.out.print("Enter the number of strings :");
-		int count =sc.nextInt();
-		String strArr[]=new String[count];
-		for(int i=0;i<count;i++){
-			System.out.print("Enter string "+(i+1)+":");
-			strArr[i]=sc.next();
+		int count = sc.nextInt();
+		String strArr[] = new String[count];
+		for (int i = 0; i < count; i++) {
+			System.out.print("Enter string " + (i + 1) + ":");
+			strArr[i] = sc.next();
 		}
 		return strArr;
 	}
 
-	public static char getCharFromUser(){
+	public static char getCharFromUser() {
 		System.out.print("Enter the character :");
 		return sc.next().charAt(0);
 	}
 
-	public static void main (String args[]){
+	public static int getIntFromUser() {
+		System.out.print("Enter the number :");
+		return sc.nextInt();
+	}
+
+	public static void main(String args[]) {
 		printChoiceList();
 		handleStringOperations(args);
 	}
