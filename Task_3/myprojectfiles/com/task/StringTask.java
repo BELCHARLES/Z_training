@@ -1,18 +1,8 @@
 package com.task;
 
-import java.util.ArrayList;
-
 import com.exception.*;
 
 public class StringTask {
-	public int checkCmdArgs(String str[]) throws InsufficientLengthException {
-		if (str.length > 0) {
-			return findLength(str[0]);
-		} else {
-			throw new InsufficientLengthException("No string provided as command line argument ,try running the file again with the arguments");
-		}
-	}
-
 	public int findLength(String str) {
 		checkObjArgIsNull(str);
 		return str.length();
@@ -23,20 +13,20 @@ public class StringTask {
 		return str.toCharArray();
 	}
 
-	public char penultimate(String str) throws InsufficientLengthException {
+	public char charAtPos(String str,int pos) throws InsufficientLengthException {
 		checkObjArgIsNull(str);
-		if (str.length() > 2) {
-			return str.charAt(str.length() - 2);
+		if (findLength(str) > pos) {
+			return str.charAt(pos-1);
 		} else {
-			throw new InsufficientLengthException("String is too small to find penultimate character, try giving string size greater than 2");
+			throw new InsufficientLengthException("String is too small to find  character at position "+pos+", try giving string size greater than "+pos);
 		}
 	}
 
-	public int countOfChar(String str, Character letter) {
+	public int countOfChar(String str, char letter) {
 		checkObjArgIsNull(str);
-		checkObjArgIsNull(letter);
 		int count = 0;
-		for (int i = 0; i < str.length(); i++) {
+		int length = findLength(str);
+		for (int i = 0; i < length; i++) {
 			if (str.charAt(i) == letter) {
 				count++;
 			}
@@ -44,43 +34,40 @@ public class StringTask {
 		return count;
 	}
 
-	public int greatestPosOfChar(String str, Character letter) {
+	public int greatestPosOfChar(String str, char letter) {
 		checkObjArgIsNull(str);
-		checkObjArgIsNull(letter);
 		return str.lastIndexOf(letter);
 	}
 
-	public String printLastNChar(String str, Integer n) throws InsufficientLengthException,InvalidArgumentException{
+	public String printLastNChar(String str, int n) throws InsufficientLengthException,InvalidArgumentException{
 		checkObjArgIsNull(str);
-		checkObjArgIsNull(n);
 		checkNumGreaterThan(n, 1);
-		if (str.length() > n - 1) {
-			return str.substring(str.length() - n);
+		if (findLength(str) > n - 1) {
+			return str.substring(findLength(str) - n);
 		} else {
 			throw new InsufficientLengthException("String is too small to print the last " + n + " characters, try giving string size atleast greater than" + (n - 1));
 		}
 	}
 
-	public String printFirstNChar(String str, Integer n) throws InsufficientLengthException,InvalidArgumentException {
+	public String printFirstNChar(String str, int n) throws InsufficientLengthException,InvalidArgumentException {
 		checkObjArgIsNull(str);
-		checkObjArgIsNull(n);
 		checkNumGreaterThan(n, 1);
 
-		if (str.length() > n - 1) {
+		if (findLength(str) > n - 1) {
 			return str.substring(0, n);
 		} else {
 			throw new InsufficientLengthException("String is too small to print the first " + n + " characters, try giving string size atleast greater than " + (n - 1));
 		}
 	}
 
-	public String replaceFirstNChar(String str, Integer count, String repStr) throws InsufficientLengthException,InvalidArgumentException {
+	public String replaceFirstNChar(String str, int count, String repStr) throws InsufficientLengthException,InvalidArgumentException {
 		checkObjArgIsNull(str);
-		checkObjArgIsNull(count);
 		checkObjArgIsNull(repStr);
 		checkNumGreaterThan(count, 1);
-		if (str.length() == count) {
+		int length=findLength(str);
+		if (length == count) {
 			return repStr;
-		} else if (str.length() > count) {
+		} else if (length> count) {
 			return repStr.concat(str.substring(count));
 		} else {
 			throw new InsufficientLengthException("String is too small to replace the first " + count + " characters, try giving string size atleast greater than " + (count - 1));
@@ -113,7 +100,7 @@ public class StringTask {
 		checkObjArgIsNull(str);
 		char[] charArr = str.toCharArray();
 		int left = 0;
-		int right = str.length() - 1;
+		int right = findLength(str) - 1;
 		while (left < right) {
 			char temp = charArr[left];
 			charArr[left] = charArr[right];
@@ -124,34 +111,22 @@ public class StringTask {
 		return new String(charArr);
 	}
 
-	public ArrayList<Character> concWithoutGivenChar(String str ,Character letter) {
+	public String concWithoutGivenChar(String str ,String letter) {
 		checkObjArgIsNull(str);
 		checkObjArgIsNull(letter);
-		char[] charArr = str.toCharArray();
-		ArrayList<Character> outputStr = new ArrayList<>();
-		for (char c : charArr) {
-			if (c != letter) {
-				outputStr.add(c);
-			}
-		}
-		return outputStr;
+		return str.replace(letter, "");
 	}
 
-	public String[] mulStrToStrArr(String str) {
+	public String[] mulStrToStrArr(String str,String delimeter) {
 		checkObjArgIsNull(str);
-		return str.split(" ");
+		checkObjArgIsNull(delimeter);
+		return str.split(delimeter);
 	}
 
-	public String mergeStrWithChar(String[] strArr, Character merger) {
+	public String mergeStrWithChar(String[] strArr, String merger) {
 		checkObjArgIsNull(strArr);
 		checkObjArgIsNull(merger);
-		String outputStr = "";
-		int i;
-		for (i = 0; i < (strArr.length - 1); i++) {
-			outputStr = outputStr + strArr[i] + merger;
-		}
-		outputStr += strArr[i];
-		return outputStr;
+		return String.join(merger, strArr);
 	}
 
 	public boolean checkEqualsCaseSensitive(String str1, String str2) {
@@ -178,7 +153,7 @@ public class StringTask {
 
 	}
 
-	public void checkNumGreaterThan(Integer n,Integer checker) throws InvalidArgumentException{
+	public void checkNumGreaterThan(int n,int checker) throws InvalidArgumentException{
 		if(n<checker){
 			throw new InvalidArgumentException("Integer value should be at least greater than or equal to "+checker+" for this operation.");
 		}

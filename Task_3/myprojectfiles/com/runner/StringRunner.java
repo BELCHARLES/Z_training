@@ -50,7 +50,7 @@ public class StringRunner {
 					handleCharArray();
 					break;
 				case 3:
-					handlePenultimate();
+					handleCharAtPos();
 					break;
 				case 4:
 					handleCountOfChar();
@@ -153,9 +153,9 @@ public class StringRunner {
 	public static void handleMergeStrWithChar() {
 		try {
 			String strArr[] = getMulStrFromUser();
-			System.out.println("Enter the character to merge with:");
-			letter = getCharFromUser();
-			System.out.println("The string after merging:" + task.mergeStrWithChar(strArr, letter));
+			System.out.println("Enter the string to merge with:");
+			String merger = getStringFromUser();
+			System.out.println("The string after merging:" + task.mergeStrWithChar(strArr, merger));
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
@@ -166,7 +166,9 @@ public class StringRunner {
 		try {
 			int i;
 			str = getSentenceFromUser();
-			String strArr[] = task.mulStrToStrArr(str);
+			System.out.println("Enter the delimeter to split the strings:");
+			String str1 = getStringFromUser();
+			String strArr[] = task.mulStrToStrArr(str,str1);
 			System.out.print("The string array : {");
 			for (i = 0; i < strArr.length - 1; i++) {
 				System.out.print("\"" + strArr[i] + "\",");
@@ -181,12 +183,9 @@ public class StringRunner {
 	public static void handleConcWithoutGivenChar() {
 		try {
 			str = getSentenceFromUser();
-			letter = getCharFromUser();
-			System.out.print("After concatenation of strings without " + letter + ":");
-			ArrayList<Character> charArray = task.concWithoutGivenChar(str, letter);
-			for (Character c : charArray) {
-				System.out.print(c);
-			}
+			System.out.println("Enter the string to be left after concatenation:");
+			String str1 = getStringFromUser();
+			System.out.print("After concatenation of strings without " + str1 + ":"+task.concWithoutGivenChar(str, str1));
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
@@ -357,11 +356,12 @@ public class StringRunner {
 
 	}
 
-	public static void handlePenultimate() {
+	public static void handleCharAtPos() {
 		try {
 			str = getStringFromUser();
-			char penultimateChar = task.penultimate(str);
-			System.out.println("The penultimate character of the string " + str + " is " + penultimateChar);
+            n=getIntFromUser();
+			char posChar = task.charAtPos(str,n);
+			System.out.println("The  character at position "+n+" of the string " + str + " is " + posChar);
 		} catch (InsufficientLengthException e) {
 			System.out.println(e.getMessage());
 		} catch (IllegalArgumentException e) {
@@ -385,10 +385,15 @@ public class StringRunner {
 
 	}
 
-	public static void handleLength(String strArr[]) {
+	public static void handleLength(String strArr[])  {
 		try {
-			int length = task.checkCmdArgs(strArr);
-			System.out.println("The length of the string " + strArr[0] + " = " + length);
+			task.checkObjArgIsNull(strArr);
+			if (strArr.length > 0) {
+				int length=task.findLength(strArr[0]);
+				System.out.println("The length of the string " + strArr[0] + " = " + length);
+			} else {
+				throw new InsufficientLengthException("No string provided as command line argument ,try running the file again with the arguments");
+			}
 		} catch (InsufficientLengthException e) {
 			System.out.println(e.getMessage());
 		} catch (IllegalArgumentException e) {
