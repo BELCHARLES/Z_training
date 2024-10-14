@@ -13,17 +13,12 @@ public class StringTask {
 		return str.toCharArray();
 	}
 
-	public char charAtPos(String str,int pos) throws InsufficientLengthException {
-		checkObjArgIsNull(str);
-		if (findLength(str) > pos) {
-			return str.charAt(pos-1);
-		} else {
-			throw new InsufficientLengthException("String is too small to find  character at position "+pos+", try giving string size greater than "+pos);
-		}
+	public char charAtPos(String str, int pos) throws BoundaryCheckException {
+		boundaryCheck(pos, 1, findLength(str));
+		return str.charAt(pos - 1);
 	}
 
 	public int countOfChar(String str, char letter) {
-		checkObjArgIsNull(str);
 		int count = 0;
 		int length = findLength(str);
 		for (int i = 0; i < length; i++) {
@@ -39,39 +34,23 @@ public class StringTask {
 		return str.lastIndexOf(letter);
 	}
 
-	public String printLastNChar(String str, int n) throws InsufficientLengthException,InvalidArgumentException{
-		checkObjArgIsNull(str);
-		checkNumGreaterThan(n, 1);
-		if (findLength(str) > n - 1) {
-			return str.substring(findLength(str) - n);
-		} else {
-			throw new InsufficientLengthException("String is too small to print the last " + n + " characters, try giving string size atleast greater than" + (n - 1));
-		}
+	public String printLastNChar(String str, int n) throws BoundaryCheckException {
+		int length = findLength(str);
+		boundaryCheck(n, 1, length);
+		return str.substring(length - n);
+
 	}
 
-	public String printFirstNChar(String str, int n) throws InsufficientLengthException,InvalidArgumentException {
-		checkObjArgIsNull(str);
-		checkNumGreaterThan(n, 1);
+	public String printFirstNChar(String str, int n) throws BoundaryCheckException {
+		boundaryCheck(n, 1, findLength(str));
+		return str.substring(0, n);
 
-		if (findLength(str) > n - 1) {
-			return str.substring(0, n);
-		} else {
-			throw new InsufficientLengthException("String is too small to print the first " + n + " characters, try giving string size atleast greater than " + (n - 1));
-		}
 	}
 
-	public String replaceFirstNChar(String str, int count, String repStr) throws InsufficientLengthException,InvalidArgumentException {
-		checkObjArgIsNull(str);
+	public String replaceFirstNChar(String str, int count, String repStr) throws BoundaryCheckException {
 		checkObjArgIsNull(repStr);
-		checkNumGreaterThan(count, 1);
-		int length=findLength(str);
-		if (length == count) {
-			return repStr;
-		} else if (length> count) {
-			return repStr.concat(str.substring(count));
-		} else {
-			throw new InsufficientLengthException("String is too small to replace the first " + count + " characters, try giving string size atleast greater than " + (count - 1));
-		}
+		boundaryCheck(count, 1, findLength(str));
+		return repStr.concat(str.substring(count));
 	}
 
 	public boolean checkStartsWith(String str, String starter) {
@@ -97,8 +76,7 @@ public class StringTask {
 	}
 
 	public String reverseString(String str) {
-		checkObjArgIsNull(str);
-		char[] charArr = str.toCharArray();
+		char[] charArr = convertToCharArray(str);
 		int left = 0;
 		int right = findLength(str) - 1;
 		while (left < right) {
@@ -111,13 +89,13 @@ public class StringTask {
 		return new String(charArr);
 	}
 
-	public String concWithoutGivenChar(String str ,String letter) {
+	public String concWithoutGivenChar(String str, String letter) {
 		checkObjArgIsNull(str);
 		checkObjArgIsNull(letter);
 		return str.replace(letter, "");
 	}
 
-	public String[] mulStrToStrArr(String str,String delimeter) {
+	public String[] mulStrToStrArr(String str, String delimeter) {
 		checkObjArgIsNull(str);
 		checkObjArgIsNull(delimeter);
 		return str.split(delimeter);
@@ -153,9 +131,13 @@ public class StringTask {
 
 	}
 
-	public void checkNumGreaterThan(int n,int checker) throws InvalidArgumentException{
-		if(n<checker){
-			throw new InvalidArgumentException("Integer value should be at least greater than or equal to "+checker+" for this operation.");
+	public void boundaryCheck(int n, int min, int max) throws BoundaryCheckException {
+		if (n < min) {
+			throw new BoundaryCheckException(
+					"Integer value should be at least greater than or equal to " + min + " for this operation.");
+		} else if (n > max) {
+			throw new BoundaryCheckException(
+					"Integer value should be at most less than or equal to" + max + "for this operation");
 		}
 	}
 
