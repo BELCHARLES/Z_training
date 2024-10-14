@@ -16,7 +16,7 @@ public class StringRunner {
 		System.out.println("\nS.no Functions");
 		System.out.println("1.   Find the length of a String");
 		System.out.println("2.   Convert string  into character Array");
-		System.out.println("3.   Find penultimate character");
+		System.out.println("3.   Find the character at given position");
 		System.out.println("4.   Find the number of occurrences of a given letter/character");
 		System.out.println("5.   Find the greatest position of the given letter/character.");
 		System.out.println("6.   Print the last 'n' characters of a given String.");
@@ -33,7 +33,7 @@ public class StringRunner {
 		System.out.println("17.  Merge multipe strings with the given character  in between");
 		System.out.println("18.  Check equality of 2 strings - Case sensitive");
 		System.out.println("19.  Check equality of 2 strings - Case insensitive");
-		System.out.println("20.  String with a space at the end & beginning or both and output the proper String with no space either at the beginning or end");
+		System.out.println("20.  Trim spaces");
 		System.out.println("21.  Exit");
 		System.out.print("Please enter the corresponding serial number to perform the requied function:");
 	}
@@ -276,11 +276,9 @@ public class StringRunner {
 			String outputStr = task.replaceFirstNChar(str, n, repStr);
 			System.out.println("On replacing the first " + n + " characters of the string " + str + " with " + repStr
 					+ " , it became  " + outputStr);
-		} catch (InsufficientLengthException e) {
+		} catch (BoundaryCheckException e) {
 			System.out.println(e.getMessage());
 		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
-		} catch (InvalidArgumentException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -292,11 +290,9 @@ public class StringRunner {
 			n = getIntFromUser();
 			String outputStr = task.printFirstNChar(str, n);
 			System.out.println("The first " + n + " characters of the string " + str + " is " + outputStr);
-		} catch (InsufficientLengthException e) {
+		} catch (BoundaryCheckException e) {
 			System.out.println(e.getMessage());
 		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
-		} catch (InvalidArgumentException e) {
 			System.out.println(e.getMessage());
 		}
 
@@ -309,11 +305,9 @@ public class StringRunner {
 			n = getIntFromUser();
 			String outputStr = task.printLastNChar(str, n);
 			System.out.println("The last " + n + " characters of the string " + str + " is " + outputStr);
-		} catch (InsufficientLengthException e) {
+		} catch (BoundaryCheckException e) {
 			System.out.println(e.getMessage());
 		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
-		} catch (InvalidArgumentException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -362,7 +356,7 @@ public class StringRunner {
             n=getIntFromUser();
 			char posChar = task.charAtPos(str,n);
 			System.out.println("The  character at position "+n+" of the string " + str + " is " + posChar);
-		} catch (InsufficientLengthException e) {
+		} catch (BoundaryCheckException e) {
 			System.out.println(e.getMessage());
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
@@ -392,10 +386,8 @@ public class StringRunner {
 				int length=task.findLength(strArr[0]);
 				System.out.println("The length of the string " + strArr[0] + " = " + length);
 			} else {
-				throw new InsufficientLengthException("No string provided as command line argument ,try running the file again with the arguments");
+				System.out.println("No string provided as command line argument ,try running the file again with the arguments");
 			}
-		} catch (InsufficientLengthException e) {
-			System.out.println(e.getMessage());
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
