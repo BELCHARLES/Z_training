@@ -89,10 +89,11 @@ public class StringTask {
 		return new String(charArr);
 	}
 
-	public String concWithoutGivenChar(String str, String letter) {
+	public String concWithoutGivenChar(String str, String letter,String replacer) {
 		checkObjArgIsNull(str);
 		checkObjArgIsNull(letter);
-		return str.replace(letter, "");
+		checkObjArgIsNull(replacer);
+		return str.replace(letter, replacer);
 	}
 
 	public String[] mulStrToStrArr(String str, String delimeter) {

@@ -183,9 +183,11 @@ public class StringRunner {
 	public static void handleConcWithoutGivenChar() {
 		try {
 			str = getSentenceFromUser();
-			System.out.println("Enter the string to be left after concatenation:");
+			System.out.println("Enter the string to be removed:");
 			String str1 = getStringFromUser();
-			System.out.print("After concatenation of strings without " + str1 + ":"+task.concWithoutGivenChar(str, str1));
+			System.out.println("Enter the string to replce with :");
+			String str2 = getStringFromUser();
+			System.out.print("After concatenation of strings without " + str1 + ":"+task.concWithoutGivenChar(str, str1,str2));
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
