@@ -360,6 +360,16 @@ public class StringRunner {
 			System.out.println("The  character at position "+n+" of the string " + str + " is " + posChar);
 		} catch (BoundaryCheckException e) {
 			System.out.println(e.getMessage());
+			System.out.println("\nPrinting Stack trace...");
+			e.printStackTrace();
+
+			Throwable cause = e.getCause();
+			if (cause != null) {
+				System.out.println("\nPrinting the cause using getCause():");
+				cause.printStackTrace(); 
+			} else {
+				System.out.println("No underlying cause.");
+			}
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}

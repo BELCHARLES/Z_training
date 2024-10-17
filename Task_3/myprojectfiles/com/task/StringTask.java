@@ -133,13 +133,30 @@ public class StringTask {
 	}
 
 	public void boundaryCheck(int n, int min, int max) throws BoundaryCheckException {
-		if (n < min) {
-			throw new BoundaryCheckException(
-					"Integer value should be at least greater than or equal to " + min + " for this operation.");
-		} else if (n > max) {
-			throw new BoundaryCheckException(
-					"Integer value should be at most less than or equal to" + max + "for this operation");
+		int flag=0;
+		try{
+			
+			if (n < min) {
+				throw new IllegalArgumentException(
+						"Integer value should be at least greater than or equal to " + min + " for this operation.");
+			} else if (n > max) {
+				flag = 1;
+				throw new IllegalArgumentException(
+						"Integer value should be at most less than or equal to " + max + " for this operation");
+			}
 		}
+		catch(IllegalArgumentException e){
+			if(flag==0){
+				throw new BoundaryCheckException("Index hitting the lower bound for this operation",e);
+			}
+			else{
+				BoundaryCheckException bce = new BoundaryCheckException("Index hitting the upper bound for this operation");
+				bce.initCause(e);
+				throw bce;
+			}
+			
+		}
+		
 	}
 
 }
