@@ -1,20 +1,22 @@
 package com.task;
 
-import com.exception.*;
+import com.validator.BoundaryCheckException;
+import com.validateargs.ValidateArgs;
 
 public class StringTask {
+	ValidateArgs validate = new ValidateArgs();
 	public int findLength(String str) {
-		checkObjArgIsNull(str);
+		validate.checkObjArgIsNull(str);
 		return str.length();
 	}
 
 	public char[] convertToCharArray(String str) {
-		checkObjArgIsNull(str);
+		validate.checkObjArgIsNull(str);
 		return str.toCharArray();
 	}
 
 	public char charAtPos(String str, int pos) throws BoundaryCheckException {
-		boundaryCheck(pos, 1, findLength(str));
+		validate.boundaryCheck(pos, 1, findLength(str));
 		return str.charAt(pos - 1);
 	}
 
@@ -30,48 +32,48 @@ public class StringTask {
 	}
 
 	public int greatestPosOfChar(String str, char letter) {
-		checkObjArgIsNull(str);
+		validate.checkObjArgIsNull(str);
 		return str.lastIndexOf(letter);
 	}
 
 	public String printLastNChar(String str, int n) throws BoundaryCheckException {
 		int length = findLength(str);
-		boundaryCheck(n, 1, length);
+		validate.boundaryCheck(n, 1, length);
 		return str.substring(length - n);
 
 	}
 
 	public String printFirstNChar(String str, int n) throws BoundaryCheckException {
-		boundaryCheck(n, 1, findLength(str));
+		validate.boundaryCheck(n, 1, findLength(str));
 		return str.substring(0, n);
 
 	}
 
 	public String replaceFirstNChar(String str, int count, String repStr) throws BoundaryCheckException {
-		checkObjArgIsNull(repStr);
-		boundaryCheck(count, 1, findLength(str));
+		validate.checkObjArgIsNull(repStr);
+		validate.boundaryCheck(count, 1, findLength(str));
 		return repStr.concat(str.substring(count));
 	}
 
 	public boolean checkStartsWith(String str, String starter) {
-		checkObjArgIsNull(str);
-		checkObjArgIsNull(starter);
+		validate.checkObjArgIsNull(str);
+		validate.checkObjArgIsNull(starter);
 		return str.startsWith(starter);
 	}
 
 	public boolean checkEndsWith(String str, String ender) {
-		checkObjArgIsNull(str);
-		checkObjArgIsNull(ender);
+		validate.checkObjArgIsNull(str);
+		validate.checkObjArgIsNull(ender);
 		return str.endsWith(ender);
 	}
 
 	public String convertToUppercase(String str) {
-		checkObjArgIsNull(str);
+		validate.checkObjArgIsNull(str);
 		return str.toUpperCase();
 	}
 
 	public String convertToLowercase(String str) {
-		checkObjArgIsNull(str);
+		validate.checkObjArgIsNull(str);
 		return str.toLowerCase();
 	}
 
@@ -90,73 +92,41 @@ public class StringTask {
 	}
 
 	public String concWithoutGivenChar(String str, String letter,String replacer) {
-		checkObjArgIsNull(str);
-		checkObjArgIsNull(letter);
-		checkObjArgIsNull(replacer);
+		validate.checkObjArgIsNull(str);
+		validate.checkObjArgIsNull(letter);
+		validate.checkObjArgIsNull(replacer);
 		return str.replace(letter, replacer);
 	}
 
 	public String[] mulStrToStrArr(String str, String delimeter) {
-		checkObjArgIsNull(str);
-		checkObjArgIsNull(delimeter);
+		validate.checkObjArgIsNull(str);
+		validate.checkObjArgIsNull(delimeter);
 		return str.split(delimeter);
 	}
 
 	public String mergeStrWithChar(String[] strArr, String merger) {
-		checkObjArgIsNull(strArr);
-		checkObjArgIsNull(merger);
+		validate.checkObjArgIsNull(strArr);
+		validate.checkObjArgIsNull(merger);
 		return String.join(merger, strArr);
 	}
 
 	public boolean checkEqualsCaseSensitive(String str1, String str2) {
-		checkObjArgIsNull(str1);
-		checkObjArgIsNull(str2);
+		validate.checkObjArgIsNull(str1);
+		validate.checkObjArgIsNull(str2);
 		return str1.equals(str2);
 	}
 
 	public boolean checkEqualsInCaseSensitive(String str1, String str2) {
-		checkObjArgIsNull(str1);
-		checkObjArgIsNull(str2);
+		validate.checkObjArgIsNull(str1);
+		validate.checkObjArgIsNull(str2);
 		return str1.equalsIgnoreCase(str2);
 	}
 
 	public String trimExtraSpace(String str) {
-		checkObjArgIsNull(str);
+		validate.checkObjArgIsNull(str);
 		return str.trim();
 	}
 
-	public void checkObjArgIsNull(Object obj) {
-		if (obj == null) {
-			throw new IllegalArgumentException("Argument cannot be null,pass a valid argument");
-		}
-
-	}
-
-	public void boundaryCheck(int n, int min, int max) throws BoundaryCheckException {
-		int flag=0;
-		try{
-			
-			if (n < min) {
-				throw new IllegalArgumentException(
-						"Integer value should be at least greater than or equal to " + min + " for this operation.");
-			} else if (n > max) {
-				flag = 1;
-				throw new IllegalArgumentException(
-						"Integer value should be at most less than or equal to " + max + " for this operation");
-			}
-		}
-		catch(IllegalArgumentException e){
-			if(flag==0){
-				throw new BoundaryCheckException("Index hitting the lower bound for this operation",e);
-			}
-			else{
-				BoundaryCheckException bce = new BoundaryCheckException("Index hitting the upper bound for this operation");
-				bce.initCause(e);
-				throw bce;
-			}
-			
-		}
-		
-	}
+	
 
 }

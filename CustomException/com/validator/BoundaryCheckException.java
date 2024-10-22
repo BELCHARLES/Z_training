@@ -1,4 +1,4 @@
-package com.exception;
+package com.validator;
 
 public class BoundaryCheckException extends Exception {
     public  BoundaryCheckException(String message) {
