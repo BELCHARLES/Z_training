@@ -173,7 +173,6 @@ public class StringRunner {
 	}
 
 	public  void handleMulStrToStrArr() {
-		int i;
 		str = read.getSentenceFromUser();
 		System.out.println("Enter the delimeter to split the strings:");
 		String str1 = read.getStringFromUser();
