@@ -3,14 +3,14 @@ package com.validateargs;
 import com.validator.BoundaryCheckException;
 
 public class ValidateArgs{
-	public void checkObjArgIsNull(Object obj) {
+	public static void checkObjArgIsNull(Object obj) {
 		if (obj == null) {
 			throw new IllegalArgumentException("Argument cannot be null,pass a valid argument");
 		}
 
 	}
 
-	public void boundaryCheck(int n, int min, int max) throws BoundaryCheckException {
+	public static void boundaryCheck(int n, int min, int max) throws BoundaryCheckException {
 		try{
 			if (n < min || n>max) {
 				throw new IllegalArgumentException(

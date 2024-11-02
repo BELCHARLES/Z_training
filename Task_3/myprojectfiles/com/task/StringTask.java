@@ -4,19 +4,18 @@ import com.validator.BoundaryCheckException;
 import com.validateargs.ValidateArgs;
 
 public class StringTask {
-	ValidateArgs validate = new ValidateArgs();
 	public int findLength(String str) {
-		validate.checkObjArgIsNull(str);
+		ValidateArgs.checkObjArgIsNull(str);
 		return str.length();
 	}
 
 	public char[] convertToCharArray(String str) {
-		validate.checkObjArgIsNull(str);
+		ValidateArgs.checkObjArgIsNull(str);
 		return str.toCharArray();
 	}
 
 	public char charAtPos(String str, int pos) throws BoundaryCheckException {
-		validate.boundaryCheck(pos, 1, findLength(str));
+		ValidateArgs.boundaryCheck(pos, 1, findLength(str));
 		return str.charAt(pos - 1);
 	}
 
@@ -32,48 +31,48 @@ public class StringTask {
 	}
 
 	public int greatestPosOfChar(String str, char letter) {
-		validate.checkObjArgIsNull(str);
+		ValidateArgs.checkObjArgIsNull(str);
 		return str.lastIndexOf(letter);
 	}
 
 	public String printLastNChar(String str, int n) throws BoundaryCheckException {
 		int length = findLength(str);
-		validate.boundaryCheck(n, 1, length);
+		ValidateArgs.boundaryCheck(n, 1, length);
 		return str.substring(length - n);
 
 	}
 
 	public String printFirstNChar(String str, int n) throws BoundaryCheckException {
-		validate.boundaryCheck(n, 1, findLength(str));
+		ValidateArgs.boundaryCheck(n, 1, findLength(str));
 		return str.substring(0, n);
 
 	}
 
 	public String replaceFirstNChar(String str, int count, String repStr) throws BoundaryCheckException {
-		validate.checkObjArgIsNull(repStr);
-		validate.boundaryCheck(count, 1, findLength(str));
+		ValidateArgs.checkObjArgIsNull(repStr);
+		ValidateArgs.boundaryCheck(count, 1, findLength(str));
 		return repStr.concat(str.substring(count));
 	}
 
 	public boolean checkStartsWith(String str, String starter) {
-		validate.checkObjArgIsNull(str);
-		validate.checkObjArgIsNull(starter);
+		ValidateArgs.checkObjArgIsNull(str);
+		ValidateArgs.checkObjArgIsNull(starter);
 		return str.startsWith(starter);
 	}
 
 	public boolean checkEndsWith(String str, String ender) {
-		validate.checkObjArgIsNull(str);
-		validate.checkObjArgIsNull(ender);
+		ValidateArgs.checkObjArgIsNull(str);
+		ValidateArgs.checkObjArgIsNull(ender);
 		return str.endsWith(ender);
 	}
 
 	public String convertToUppercase(String str) {
-		validate.checkObjArgIsNull(str);
+		ValidateArgs.checkObjArgIsNull(str);
 		return str.toUpperCase();
 	}
 
 	public String convertToLowercase(String str) {
-		validate.checkObjArgIsNull(str);
+		ValidateArgs.checkObjArgIsNull(str);
 		return str.toLowerCase();
 	}
 
@@ -92,38 +91,38 @@ public class StringTask {
 	}
 
 	public String concWithoutGivenChar(String str, String letter,String replacer) {
-		validate.checkObjArgIsNull(str);
-		validate.checkObjArgIsNull(letter);
-		validate.checkObjArgIsNull(replacer);
+		ValidateArgs.checkObjArgIsNull(str);
+		ValidateArgs.checkObjArgIsNull(letter);
+		ValidateArgs.checkObjArgIsNull(replacer);
 		return str.replace(letter, replacer);
 	}
 
 	public String[] mulStrToStrArr(String str, String delimeter) {
-		validate.checkObjArgIsNull(str);
-		validate.checkObjArgIsNull(delimeter);
+		ValidateArgs.checkObjArgIsNull(str);
+		ValidateArgs.checkObjArgIsNull(delimeter);
 		return str.split(delimeter);
 	}
 
 	public String mergeStrWithChar(String[] strArr, String merger) {
-		validate.checkObjArgIsNull(strArr);
-		validate.checkObjArgIsNull(merger);
+		ValidateArgs.checkObjArgIsNull(strArr);
+		ValidateArgs.checkObjArgIsNull(merger);
 		return String.join(merger, strArr);
 	}
 
 	public boolean checkEqualsCaseSensitive(String str1, String str2) {
-		validate.checkObjArgIsNull(str1);
-		validate.checkObjArgIsNull(str2);
+		ValidateArgs.checkObjArgIsNull(str1);
+		ValidateArgs.checkObjArgIsNull(str2);
 		return str1.equals(str2);
 	}
 
 	public boolean checkEqualsInCaseSensitive(String str1, String str2) {
-		validate.checkObjArgIsNull(str1);
-		validate.checkObjArgIsNull(str2);
+		ValidateArgs.checkObjArgIsNull(str1);
+		ValidateArgs.checkObjArgIsNull(str2);
 		return str1.equalsIgnoreCase(str2);
 	}
 
 	public String trimExtraSpace(String str) {
-		validate.checkObjArgIsNull(str);
+		ValidateArgs.checkObjArgIsNull(str);
 		return str.trim();
 	}
 

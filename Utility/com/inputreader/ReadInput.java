@@ -3,19 +3,19 @@ package com.inputreader;
 import java.util.Scanner;
 
 public class ReadInput{
-	Scanner sc =new Scanner(System.in);
-    public  String getStringFromUser() {
+	static Scanner sc =new Scanner(System.in);
+    public  static String getStringFromUser() {
 		System.out.print("Enter the string :");
 		return sc.next();
 	}
 
-	public  String getSentenceFromUser() {
+	public  static String getSentenceFromUser() {
 		System.out.print("Enter the string :");
 		sc.nextLine();
 		return sc.nextLine();
 	}
 
-	public  String[] getMulStrFromUser() {
+	public  static String[] getMulStrFromUser() {
 		System.out.print("Enter the number of strings :");
 		int count = sc.nextInt();
 		String strArr[] = new String[count];
@@ -26,13 +26,19 @@ public class ReadInput{
 		return strArr;
 	}
 
-	public  char getCharFromUser() {
+	public  static char getCharFromUser() {
 		System.out.print("Enter the character :");
 		return sc.next().charAt(0);
 	}
 
-	public  int getIntFromUser() {
+	public  static int getIntFromUser() {
 		System.out.print("Enter the number :");
 		return sc.nextInt();
+	}
+	
+	public static void closeScanner(){
+		if(sc!=null){
+			sc.close();
+		}
 	}
 }
