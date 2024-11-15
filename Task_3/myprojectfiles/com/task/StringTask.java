@@ -1,5 +1,6 @@
 package com.task;
 
+import com.stringtaskexception.StringTaskException;
 import com.validator.BoundaryCheckException;
 import com.validateargs.ValidateArgs;
 
@@ -14,9 +15,14 @@ public class StringTask {
 		return str.toCharArray();
 	}
 
-	public char charAtPos(String str, int pos) throws BoundaryCheckException {
-		ValidateArgs.boundaryCheck(pos, 1, findLength(str));
-		return str.charAt(pos - 1);
+	public char charAtPos(String str, int pos) throws StringTaskException {
+		try{
+			ValidateArgs.boundaryCheck(pos, 1, findLength(str));
+			return str.charAt(pos - 1);
+		}
+		catch(BoundaryCheckException e){
+			throw new StringTaskException("Index out of range in method charAtPos",e);
+		}
 	}
 
 	public int countOfChar(String str, char letter) {
@@ -35,23 +41,37 @@ public class StringTask {
 		return str.lastIndexOf(letter);
 	}
 
-	public String printLastNChar(String str, int n) throws BoundaryCheckException {
-		int length = findLength(str);
-		ValidateArgs.boundaryCheck(n, 1, length);
-		return str.substring(length - n);
-
+	public String getLastNChar(String str, int n) throws StringTaskException {
+		try{
+			int length = findLength(str);
+			ValidateArgs.boundaryCheck(n, 1, length);
+			return str.substring(length - n);
+		}
+		catch(BoundaryCheckException e){
+			throw new StringTaskException("Index out of range in method getLastNChar",e);
+		}	
 	}
 
-	public String printFirstNChar(String str, int n) throws BoundaryCheckException {
-		ValidateArgs.boundaryCheck(n, 1, findLength(str));
-		return str.substring(0, n);
-
+	public String getFirstNChar(String str, int n) throws StringTaskException {
+		try{
+			ValidateArgs.boundaryCheck(n, 1, findLength(str));
+			return str.substring(0, n);
+		}
+		catch(BoundaryCheckException e){
+			throw new StringTaskException("Index out of range in method getFirstNChar",e);
+		}
+		
 	}
 
-	public String replaceFirstNChar(String str, int count, String repStr) throws BoundaryCheckException {
-		ValidateArgs.checkObjArgIsNull(repStr);
-		ValidateArgs.boundaryCheck(count, 1, findLength(str));
-		return repStr.concat(str.substring(count));
+	public String replaceFirstNChar(String str, int count, String repStr) throws StringTaskException {
+		try{
+			ValidateArgs.checkObjArgIsNull(repStr);
+			ValidateArgs.boundaryCheck(count, 1, findLength(str));
+			return repStr.concat(str.substring(count));
+		}
+		catch(BoundaryCheckException e){
+			throw new StringTaskException("Index out of range in method replaceFirstNChar",e);
+		}
 	}
 
 	public boolean checkStartsWith(String str, String starter) {
@@ -66,13 +86,11 @@ public class StringTask {
 		return str.endsWith(ender);
 	}
 
-	public String convertToUppercase(String str) {
+	public String changeCase(String str,boolean toUpper) {
 		ValidateArgs.checkObjArgIsNull(str);
-		return str.toUpperCase();
-	}
-
-	public String convertToLowercase(String str) {
-		ValidateArgs.checkObjArgIsNull(str);
+		if(toUpper){
+			return str.toUpperCase();
+		}
 		return str.toLowerCase();
 	}
 
@@ -90,14 +108,14 @@ public class StringTask {
 		return new String(charArr);
 	}
 
-	public String concWithoutGivenChar(String str, String letter,String replacer) {
+	public String concWithoutGivenChar(String str, String remover,String replacer) {
 		ValidateArgs.checkObjArgIsNull(str);
-		ValidateArgs.checkObjArgIsNull(letter);
+		ValidateArgs.checkObjArgIsNull(remover);
 		ValidateArgs.checkObjArgIsNull(replacer);
-		return str.replace(letter, replacer);
+		return str.replace(remover, replacer);
 	}
 
-	public String[] mulStrToStrArr(String str, String delimeter) {
+	public String[] split(String str, String delimeter) {
 		ValidateArgs.checkObjArgIsNull(str);
 		ValidateArgs.checkObjArgIsNull(delimeter);
 		return str.split(delimeter);
@@ -109,15 +127,12 @@ public class StringTask {
 		return String.join(merger, strArr);
 	}
 
-	public boolean checkEqualsCaseSensitive(String str1, String str2) {
+	public boolean equalsWithCaseOption(String str1, String str2,boolean isCaseSensitive) {
 		ValidateArgs.checkObjArgIsNull(str1);
 		ValidateArgs.checkObjArgIsNull(str2);
-		return str1.equals(str2);
-	}
-
-	public boolean checkEqualsInCaseSensitive(String str1, String str2) {
-		ValidateArgs.checkObjArgIsNull(str1);
-		ValidateArgs.checkObjArgIsNull(str2);
+		if (isCaseSensitive){
+			return str1.equals(str2);
+		}
 		return str1.equalsIgnoreCase(str2);
 	}
 
@@ -125,7 +140,5 @@ public class StringTask {
 		ValidateArgs.checkObjArgIsNull(str);
 		return str.trim();
 	}
-
-	
 
 }

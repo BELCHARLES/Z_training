@@ -1,8 +1,7 @@
 package com.runner;
 
-import com.validator.BoundaryCheckException;
+import com.stringtaskexception.StringTaskException;
 import com.task.StringTask;
-import com.inputreader.ReadInput;
 import com.validateargs.ValidateArgs;
 
 import java.util.Scanner;
@@ -10,12 +9,12 @@ import java.util.Arrays;
 
 public class StringRunner {
 
-	StringTask task = new StringTask();
-	Scanner sc = new Scanner(System.in);
+	private StringTask task = new StringTask();
+	private static Scanner sc = new Scanner(System.in);
 	// for storing user inputs
-	String str;
-	char letter;
-	int n;
+	private String str;
+	private char letter;
+	private int n;
 
 	public void printChoiceList() {
 		System.out.println("\nS.no Functions");
@@ -46,11 +45,10 @@ public class StringRunner {
 	public  void handleStringOperations(String strArr[]) {
 		StringRunner runner = new StringRunner();
 		int choice = sc.nextInt();
+		sc.nextLine();
 		
 		//if choice = 21 => exit
 		if(choice == 21){
-			sc.close();
-			ReadInput.closeScanner();
 			return;
 		}
 		
@@ -58,84 +56,118 @@ public class StringRunner {
 			try{
 				switch (choice) {
 					case 1:
-						runner.handleLength(strArr);
+						handleLength(strArr);
 						break;
 					case 2:
-						runner.handleCharArray();
+						handleCharArray();
 						break;
 					case 3:
-						runner.handleCharAtPos();
+						handleCharAtPos();
 						break;
 					case 4:
-						runner.handleCountOfChar();
+						handleCountOfChar();
 						break;
 					case 5:
-						runner.handleGreatestPosition();
+						handleGreatestPosition();
 						break;
 					case 6:
-						runner.handlePrintLastNChar();
+						handlePrintLastNChar();
 						break;
 					case 7:
-						runner.handlePrintFirstNChar();
+						handlePrintFirstNChar();
 						break;
 					case 8:
-						runner.handleReplaceFirstNChar();
+						handleReplaceFirstNChar();
 						break;
 					case 9:
-						runner.handleCheckStartsWith();
+						handleCheckStartsWith();
 						break;
 					case 10:
-						runner.handleCheckEndsWith();
+						handleCheckEndsWith();
 						break;
 					case 11:
-						runner.handleConvertToUppercase();
+						handleChangeCase(true);
 						break;
 					case 12:
-						runner.handleConvertToLowercase();
+						handleChangeCase(false);
 						break;
 					case 13:
-						runner.handleReverseString();
+						handleReverseString();
 						break;
 					case 14:
-						runner.handleAcceptMultipleString();
+						handleAcceptMultipleString();
 						break;
 					case 15:
-						runner.handleConcWithoutGivenChar();
+						handleConcWithoutGivenChar();
 						break;
 					case 16:
-						runner.handleMulStrToStrArr();
+						handleSplit();
 						break;
 					case 17:
-						runner.handleMergeStrWithChar();
+						handleMergeStrWithChar();
 						break;
 					case 18:
-						runner.handleCheckEqualsCaseSensitive();
+						handleEqualsWithCaseOption(true);
 						break;
 					case 19:
-						runner.handleCheckEqualsInCaseSensitive();
+						handleEqualsWithCaseOption(false);
 						break;
 					case 20:
-						runner.handleTrimExtraSpace();
+						handleTrimExtraSpace();
 						break;
 					default:
 						System.out.println("Please enter a valid choice");
 						break;
 				}
 		    }
-			catch (IllegalArgumentException | BoundaryCheckException e){
+			catch (IllegalArgumentException | StringTaskException e){
 			System.out.println(e.getMessage());
 			System.out.println("Printing Stack Trace...");
 			e.printStackTrace();
 		}
 		runner.printChoiceList();
 		choice = sc.nextInt();
+		sc.nextLine();
 		} while (choice != 21);
-		sc.close();
-		ReadInput.closeScanner();
+	}
+	
+	public static String getStringFromUser() {
+		System.out.print("Enter the string :");
+		String input=sc.next();
+		sc.nextLine();
+		return input;
+	}
+
+	public static String getSentenceFromUser() {
+		System.out.print("Enter the strings :");
+		return sc.nextLine();
+	}
+
+	public static String[] getMulStrFromUser() {
+		System.out.print("Enter the number of strings :");
+		int count = sc.nextInt();
+		String strArr[] = new String[count];
+		for (int i = 0; i < count; i++) {
+			System.out.print("Enter string " + (i + 1) + ":");
+			strArr[i] = sc.next();
+		}
+		return strArr;
+	}
+
+	public static char getCharFromUser() {
+		System.out.print("Enter the character :");
+		return sc.next().charAt(0);
+	}
+
+	public  static int getIntFromUser() {
+		System.out.print("Enter the number :");
+		int number=sc.nextInt();
+		sc.nextLine();
+		return number;
 	}
 
 	public void handleTrimExtraSpace() {
-		str = ReadInput.getSentenceFromUser();
+		str = getSentenceFromUser();
 		System.out.println("The string before trimming : \"" + str + "\"");
 		System.out.println("The length of the string before trimming: " + task.findLength(str));
 		str = task.trimExtraSpace(str);
@@ -143,113 +175,102 @@ public class StringRunner {
 		System.out.println("The length of the string after trimming: " + str.length());
 	}
 
-	public void handleCheckEqualsInCaseSensitive() {
-		System.out.println("Enter the strings to check whether they are equal (case insensitive): ");
-		String str1 = ReadInput.getStringFromUser();
-		String str2 = ReadInput.getStringFromUser();
-		System.out.println(task.checkEqualsInCaseSensitive(str1, str2));
-	}
-
-	public void handleCheckEqualsCaseSensitive() {
-		System.out.println("Enter the strings to check whether they are equal (case sensitive): ");
-		String str1 = ReadInput.getStringFromUser();
-		String str2 = ReadInput.getStringFromUser();
-		System.out.println(task.checkEqualsCaseSensitive(str1, str2));
+	public void handleEqualsWithCaseOption(boolean isCaseSensitive) {
+		System.out.println("Enter the strings to check whether they are equal (case sensitivity): "+isCaseSensitive);
+		String str1 = getStringFromUser();
+		String str2 = getStringFromUser();
+		System.out.println(task.equalsWithCaseOption(str1, str2,isCaseSensitive));
 	}
 
 	public void handleMergeStrWithChar() {
-		String strArr[] = ReadInput.getMulStrFromUser();
+		String strArr[] = getMulStrFromUser();
 		System.out.println("Enter the string to merge with:");
-		String merger = ReadInput.getStringFromUser();
+		String merger = getStringFromUser();
 		System.out.println("The string after merging:" + task.mergeStrWithChar(strArr, merger));
 	}
 
-	public void handleMulStrToStrArr() {
-		str = ReadInput.getSentenceFromUser();
+	public void handleSplit() {
+		str = getSentenceFromUser();
 		System.out.println("Enter the delimeter to split the strings:");
-		String str1 = ReadInput.getStringFromUser();
-		String strArr[] = task.mulStrToStrArr(str, str1);
+		String str1 = getStringFromUser();
+		String strArr[] = task.split(str, str1);
 		System.out.print("The string array : " + Arrays.toString(strArr));
 	}
 
 	public void handleAcceptMultipleString() {
-		str = ReadInput.getSentenceFromUser();
+		str = getSentenceFromUser();
 		System.out.println("You entered: " + str);
 	}
 
 	public void handleConcWithoutGivenChar() {
-		str = ReadInput.getSentenceFromUser();
+		str = getSentenceFromUser();
 		System.out.println("Enter the string to be removed:");
-		String str1 = ReadInput.getStringFromUser();
+		String str1 = getStringFromUser();
 		System.out.println("Enter the string to replce with :");
-		String str2 = ReadInput.getStringFromUser();
+		String str2 = getStringFromUser();
 		System.out.print(
 				"After concatenation of strings without " + str1 + ":" + task.concWithoutGivenChar(str, str1, str2));
 	}
 
 	public void handleReverseString() {
-		str = ReadInput.getStringFromUser();
+		str = getStringFromUser();
 		System.out.println(str + "->" + task.reverseString(str));
 	}
 
-	public void handleConvertToLowercase() {
-		str = ReadInput.getStringFromUser();
-		System.out.println(str + "->" + task.convertToLowercase(str));
-	}
 
-	public void handleConvertToUppercase() {
-		str = ReadInput.getStringFromUser();
-		System.out.println(str + "->" + task.convertToUppercase(str));
+	public void handleChangeCase(boolean toUpper) {
+		str = getStringFromUser();
+		System.out.println(str + "->" + task.changeCase(str,toUpper));
 	}
 
 	public void handleCheckEndsWith() {
-		str = ReadInput.getStringFromUser();
+		str = getStringFromUser();
 		System.out.println("Enter the string to check for:");
-		String ender = ReadInput.getStringFromUser();
+		String ender = getStringFromUser();
 		boolean ans = task.checkEndsWith(str, ender);
 		System.out.println("The String " + str + " ends with " + ender + " : " + ans);
 	}
 
 	public void handleCheckStartsWith() {
-		str = ReadInput.getStringFromUser();
+		str = getStringFromUser();
 		System.out.println("Enter the string to check for:");
-		String starter = ReadInput.getStringFromUser();
+		String starter = getStringFromUser();
 		boolean ans = task.checkStartsWith(str, starter);
 		System.out.println("The String " + str + " starts with " + starter + " : " + ans);
 	}
 
-	public void handleReplaceFirstNChar() throws BoundaryCheckException {
-		str = ReadInput.getStringFromUser();
+	public void handleReplaceFirstNChar() throws StringTaskException {
+		str = getStringFromUser();
 		System.out.println("Enter the number of characters");
-		n = ReadInput.getIntFromUser();
+		n = getIntFromUser();
 		System.out.println("Enter the string to be replaced with:");
-		String repStr = ReadInput.getStringFromUser();
+		String repStr = getStringFromUser();
 		String outputStr = task.replaceFirstNChar(str, n, repStr);
 		System.out.println("On replacing the first " + n + " characters of the string " + str + " with " + repStr
 				+ " , it became  " + outputStr);
 	}
 
-	public void handlePrintFirstNChar() throws BoundaryCheckException {
-		str = ReadInput.getStringFromUser();
+	public void handlePrintFirstNChar() throws StringTaskException {
+		str = getStringFromUser();
 		System.out.println("Enter the number of characters");
-		n = ReadInput.getIntFromUser();
-		String outputStr = task.printFirstNChar(str, n);
+		n = getIntFromUser();
+		String outputStr = task.getFirstNChar(str, n);
 		System.out.println("The first " + n + " characters of the string " + str + " is " + outputStr);
 	}
 
-	public void handlePrintLastNChar() throws BoundaryCheckException {
-		str = ReadInput.getStringFromUser();
+	public void handlePrintLastNChar() throws StringTaskException {
+		str = getStringFromUser();
 		System.out.println("Enter the number of characters");
-		n = ReadInput.getIntFromUser();
-		String outputStr = task.printLastNChar(str, n);
+		n = getIntFromUser();
+		String outputStr = task.getLastNChar(str, n);
 		System.out.println("The last " + n + " characters of the string " + str + " is " + outputStr);
 	}
 
 	public void handleGreatestPosition() {
-		str = ReadInput.getStringFromUser();
+		str = getStringFromUser();
 		char choice = 'y';
 		while (choice == 'y') {
-			letter = ReadInput.getCharFromUser();
+			letter = getCharFromUser();
 			int index = task.greatestPosOfChar(str, letter);
 			if (index != -1) {
 				System.out.println(
@@ -263,10 +284,10 @@ public class StringRunner {
 	}
 
 	public void handleCountOfChar() {
-		str = ReadInput.getStringFromUser();
+		str = getStringFromUser();
 		char choice = 'y';
 		while (choice == 'y') {
-			letter = ReadInput.getCharFromUser();
+			letter = getCharFromUser();
 			int count = task.countOfChar(str, letter);
 			System.out.println("The  number of occurrences of " + letter + " in the string " + str + " is " + count);
 			System.out.print("Do you want to check for another letter/character (Enter 'y' for yes and 'n' for no) :");
@@ -274,15 +295,15 @@ public class StringRunner {
 		}
 	}
 
-	public void handleCharAtPos() throws BoundaryCheckException {
-		str = ReadInput.getStringFromUser();
-		n = ReadInput.getIntFromUser();
+	public void handleCharAtPos() throws StringTaskException {
+		str = getStringFromUser();
+		n = getIntFromUser();
 		char posChar = task.charAtPos(str, n);
 		System.out.println("The character at position " + n + " of the string " + str + " is " + posChar);
 	}
 
 	public void handleCharArray() {
-		str = ReadInput.getStringFromUser();
+		str = getStringFromUser();
 		char[] charArray = task.convertToCharArray(str);
 		System.out.println(str + " on converting to character array... ");
 		for (char c : charArray) {
@@ -303,8 +324,13 @@ public class StringRunner {
 	}
 
 	public static void main(String args[]) {
-		StringRunner runner = new StringRunner();
-		runner.printChoiceList();
-		runner.handleStringOperations(args);
+		try{
+			StringRunner runner = new StringRunner();
+			runner.printChoiceList();
+			runner.handleStringOperations(args);
+		}
+		finally{
+			sc.close();
+		} 
 	}
 }
