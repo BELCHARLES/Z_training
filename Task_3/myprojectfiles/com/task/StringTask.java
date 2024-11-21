@@ -2,22 +2,22 @@ package com.task;
 
 import com.stringtaskexception.StringTaskException;
 import com.validator.BoundaryCheckException;
-import com.validateargs.ValidateArgs;
+import com.invalidargumentexception.InvalidArgumentException;
+import com.generalutils.GeneralUtils;
 
 public class StringTask {
-	public int findLength(String str) {
-		ValidateArgs.checkObjArgIsNull(str);
-		return str.length();
+	public int findLength(String str) throws InvalidArgumentException {
+		return GeneralUtils.findLength(str);
 	}
 
-	public char[] convertToCharArray(String str) {
-		ValidateArgs.checkObjArgIsNull(str);
+	public char[] convertToCharArray(String str)throws InvalidArgumentException {
+		GeneralUtils.checkObjArgIsNull(str);
 		return str.toCharArray();
 	}
 
-	public char charAtPos(String str, int pos) throws StringTaskException {
+	public char charAtPos(String str, int pos) throws StringTaskException,InvalidArgumentException {
 		try{
-			ValidateArgs.boundaryCheck(pos, 1, findLength(str));
+			GeneralUtils.boundaryCheck(pos, 1, findLength(str));
 			return str.charAt(pos - 1);
 		}
 		catch(BoundaryCheckException e){
@@ -25,7 +25,7 @@ public class StringTask {
 		}
 	}
 
-	public int countOfChar(String str, char letter) {
+	public int countOfChar(String str, char letter)throws InvalidArgumentException {
 		int count = 0;
 		int length = findLength(str);
 		for (int i = 0; i < length; i++) {
@@ -36,15 +36,15 @@ public class StringTask {
 		return count;
 	}
 
-	public int greatestPosOfChar(String str, char letter) {
-		ValidateArgs.checkObjArgIsNull(str);
+	public int greatestPosOfChar(String str, char letter)throws InvalidArgumentException {
+		GeneralUtils.checkObjArgIsNull(str);
 		return str.lastIndexOf(letter);
 	}
 
-	public String getLastNChar(String str, int n) throws StringTaskException {
+	public String getLastNChar(String str, int n) throws StringTaskException,InvalidArgumentException {
 		try{
 			int length = findLength(str);
-			ValidateArgs.boundaryCheck(n, 1, length);
+			GeneralUtils.boundaryCheck(n, 1, length);
 			return str.substring(length - n);
 		}
 		catch(BoundaryCheckException e){
@@ -52,9 +52,9 @@ public class StringTask {
 		}	
 	}
 
-	public String getFirstNChar(String str, int n) throws StringTaskException {
+	public String getFirstNChar(String str, int n) throws StringTaskException,InvalidArgumentException {
 		try{
-			ValidateArgs.boundaryCheck(n, 1, findLength(str));
+			GeneralUtils.boundaryCheck(n, 1, findLength(str));
 			return str.substring(0, n);
 		}
 		catch(BoundaryCheckException e){
@@ -63,10 +63,10 @@ public class StringTask {
 		
 	}
 
-	public String replaceFirstNChar(String str, int count, String repStr) throws StringTaskException {
+	public String replaceFirstNChar(String str, int count, String repStr) throws StringTaskException,InvalidArgumentException {
 		try{
-			ValidateArgs.checkObjArgIsNull(repStr);
-			ValidateArgs.boundaryCheck(count, 1, findLength(str));
+			GeneralUtils.checkObjArgIsNull(repStr);
+			GeneralUtils.boundaryCheck(count, 1, findLength(str));
 			return repStr.concat(str.substring(count));
 		}
 		catch(BoundaryCheckException e){
@@ -74,27 +74,27 @@ public class StringTask {
 		}
 	}
 
-	public boolean checkStartsWith(String str, String starter) {
-		ValidateArgs.checkObjArgIsNull(str);
-		ValidateArgs.checkObjArgIsNull(starter);
+	public boolean checkStartsWith(String str, String starter)throws InvalidArgumentException {
+		GeneralUtils.checkObjArgIsNull(str);
+		GeneralUtils.checkObjArgIsNull(starter);
 		return str.startsWith(starter);
 	}
 
-	public boolean checkEndsWith(String str, String ender) {
-		ValidateArgs.checkObjArgIsNull(str);
-		ValidateArgs.checkObjArgIsNull(ender);
+	public boolean checkEndsWith(String str, String ender) throws InvalidArgumentException{
+		GeneralUtils.checkObjArgIsNull(str);
+		GeneralUtils.checkObjArgIsNull(ender);
 		return str.endsWith(ender);
 	}
 
-	public String changeCase(String str,boolean toUpper) {
-		ValidateArgs.checkObjArgIsNull(str);
+	public String changeCase(String str,boolean toUpper)throws InvalidArgumentException {
+		GeneralUtils.checkObjArgIsNull(str);
 		if(toUpper){
 			return str.toUpperCase();
 		}
 		return str.toLowerCase();
 	}
 
-	public String reverseString(String str) {
+	public String reverseString(String str) throws InvalidArgumentException{
 		char[] charArr = convertToCharArray(str);
 		int left = 0;
 		int right = findLength(str) - 1;
@@ -108,36 +108,32 @@ public class StringTask {
 		return new String(charArr);
 	}
 
-	public String concWithoutGivenChar(String str, String remover,String replacer) {
-		ValidateArgs.checkObjArgIsNull(str);
-		ValidateArgs.checkObjArgIsNull(remover);
-		ValidateArgs.checkObjArgIsNull(replacer);
+	public String concWithoutGivenChar(String str, String remover,String replacer)throws InvalidArgumentException {
+		GeneralUtils.checkObjArgIsNull(str);
+		GeneralUtils.checkObjArgIsNull(remover);
+		GeneralUtils.checkObjArgIsNull(replacer);
 		return str.replace(remover, replacer);
 	}
 
-	public String[] split(String str, String delimeter) {
-		ValidateArgs.checkObjArgIsNull(str);
-		ValidateArgs.checkObjArgIsNull(delimeter);
-		return str.split(delimeter);
+	public String[] split(String str, String delimeter)throws InvalidArgumentException {
+		return GeneralUtils.split(str,delimiter);
 	}
 
-	public String mergeStrWithChar(String[] strArr, String merger) {
-		ValidateArgs.checkObjArgIsNull(strArr);
-		ValidateArgs.checkObjArgIsNull(merger);
-		return String.join(merger, strArr);
+	public String mergeStrWithChar(ArrayList<String> strArr, String merger)throws InvalidArgumentException {
+		return GeneralUtils.join(merger,strArr);
 	}
 
-	public boolean equalsWithCaseOption(String str1, String str2,boolean isCaseSensitive) {
-		ValidateArgs.checkObjArgIsNull(str1);
-		ValidateArgs.checkObjArgIsNull(str2);
+	public boolean equalsWithCaseOption(String str1, String str2,boolean isCaseSensitive)throws InvalidArgumentException {
+		GeneralUtils.checkObjArgIsNull(str1);
+		GeneralUtils.checkObjArgIsNull(str2);
 		if (isCaseSensitive){
 			return str1.equals(str2);
 		}
 		return str1.equalsIgnoreCase(str2);
 	}
 
-	public String trimExtraSpace(String str) {
-		ValidateArgs.checkObjArgIsNull(str);
+	public String trimExtraSpace(String str) throws InvalidArgumentException{
+		GeneralUtils.checkObjArgIsNull(str);
 		return str.trim();
 	}
 
