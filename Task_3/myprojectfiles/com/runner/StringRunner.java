@@ -1,8 +1,9 @@
 package com.runner;
 
 import com.stringtaskexception.StringTaskException;
+import com.invalidargumentexception.InvalidArgumentException;
 import com.task.StringTask;
-import com.validateargs.ValidateArgs;
+import com.generalutils.GeneralUtils;
 
 import java.util.Scanner;
 import java.util.Arrays;
@@ -120,7 +121,7 @@ public class StringRunner {
 						break;
 				}
 		    }
-			catch (IllegalArgumentException | StringTaskException e){
+			catch (InvalidArgumentException | StringTaskException e){
 			System.out.println(e.getMessage());
 			System.out.println("Printing Stack Trace...");
 			e.printStackTrace();
@@ -143,15 +144,17 @@ public class StringRunner {
 		return sc.nextLine();
 	}
 
-	public static String[] getMulStrFromUser() {
-		System.out.print("Enter the number of strings :");
-		int count = sc.nextInt();
-		String strArr[] = new String[count];
-		for (int i = 0; i < count; i++) {
-			System.out.print("Enter string " + (i + 1) + ":");
-			strArr[i] = sc.next();
+	public static List getMulStrFromUser() {
+		ArrayList<String> stringList = new ArrayList<>();
+		char choice = 'y';
+		while (choice == 'y') {
+			System.out.print("Enter a string: ");
+			stringList.add(sc.nextLine());
+			System.out.print("Do you want to add more strings? (y/n): ");
+			choice = sc.next().charAt(0);
+			sc.nextLine(); 
 		}
-		return strArr;
+		return stringList;
 	}
 
 	public static char getCharFromUser() {
@@ -166,7 +169,7 @@ public class StringRunner {
 		return number;
 	}
 
-	public void handleTrimExtraSpace() {
+	public void handleTrimExtraSpace()throws InvalidArgumentException {
 		str = getSentenceFromUser();
 		System.out.println("The string before trimming : \"" + str + "\"");
 		System.out.println("The length of the string before trimming: " + task.findLength(str));
@@ -175,21 +178,21 @@ public class StringRunner {
 		System.out.println("The length of the string after trimming: " + str.length());
 	}
 
-	public void handleEqualsWithCaseOption(boolean isCaseSensitive) {
+	public void handleEqualsWithCaseOption(boolean isCaseSensitive)throws InvalidArgumentException {
 		System.out.println("Enter the strings to check whether they are equal (case sensitivity): "+isCaseSensitive);
 		String str1 = getStringFromUser();
 		String str2 = getStringFromUser();
 		System.out.println(task.equalsWithCaseOption(str1, str2,isCaseSensitive));
 	}
 
-	public void handleMergeStrWithChar() {
-		String strArr[] = getMulStrFromUser();
+	public void handleMergeStrWithChar() throws InvalidArgumentException{
+		ArrayList <String> strArr = getMulStrFromUser();
 		System.out.println("Enter the string to merge with:");
 		String merger = getStringFromUser();
 		System.out.println("The string after merging:" + task.mergeStrWithChar(strArr, merger));
 	}
 
-	public void handleSplit() {
+	public void handleSplit() throws InvalidArgumentException{
 		str = getSentenceFromUser();
 		System.out.println("Enter the delimeter to split the strings:");
 		String str1 = getStringFromUser();
@@ -202,7 +205,7 @@ public class StringRunner {
 		System.out.println("You entered: " + str);
 	}
 
-	public void handleConcWithoutGivenChar() {
+	public void handleConcWithoutGivenChar() throws InvalidArgumentException{
 		str = getSentenceFromUser();
 		System.out.println("Enter the string to be removed:");
 		String str1 = getStringFromUser();
@@ -212,18 +215,18 @@ public class StringRunner {
 				"After concatenation of strings without " + str1 + ":" + task.concWithoutGivenChar(str, str1, str2));
 	}
 
-	public void handleReverseString() {
+	public void handleReverseString() throws InvalidArgumentException {
 		str = getStringFromUser();
 		System.out.println(str + "->" + task.reverseString(str));
 	}
 
 
-	public void handleChangeCase(boolean toUpper) {
+	public void handleChangeCase(boolean toUpper)throws InvalidArgumentException {
 		str = getStringFromUser();
 		System.out.println(str + "->" + task.changeCase(str,toUpper));
 	}
 
-	public void handleCheckEndsWith() {
+	public void handleCheckEndsWith()throws InvalidArgumentException {
 		str = getStringFromUser();
 		System.out.println("Enter the string to check for:");
 		String ender = getStringFromUser();
@@ -231,7 +234,7 @@ public class StringRunner {
 		System.out.println("The String " + str + " ends with " + ender + " : " + ans);
 	}
 
-	public void handleCheckStartsWith() {
+	public void handleCheckStartsWith()throws InvalidArgumentException {
 		str = getStringFromUser();
 		System.out.println("Enter the string to check for:");
 		String starter = getStringFromUser();
@@ -239,7 +242,7 @@ public class StringRunner {
 		System.out.println("The String " + str + " starts with " + starter + " : " + ans);
 	}
 
-	public void handleReplaceFirstNChar() throws StringTaskException {
+	public void handleReplaceFirstNChar() throws StringTaskException,InvalidArgumentException{
 		str = getStringFromUser();
 		System.out.println("Enter the number of characters");
 		n = getIntFromUser();
@@ -250,7 +253,7 @@ public class StringRunner {
 				+ " , it became  " + outputStr);
 	}
 
-	public void handlePrintFirstNChar() throws StringTaskException {
+	public void handlePrintFirstNChar() throws StringTaskException,InvalidArgumentException{
 		str = getStringFromUser();
 		System.out.println("Enter the number of characters");
 		n = getIntFromUser();
@@ -258,7 +261,7 @@ public class StringRunner {
 		System.out.println("The first " + n + " characters of the string " + str + " is " + outputStr);
 	}
 
-	public void handlePrintLastNChar() throws StringTaskException {
+	public void handlePrintLastNChar() throws StringTaskException,InvalidArgumentException{
 		str = getStringFromUser();
 		System.out.println("Enter the number of characters");
 		n = getIntFromUser();
@@ -266,7 +269,7 @@ public class StringRunner {
 		System.out.println("The last " + n + " characters of the string " + str + " is " + outputStr);
 	}
 
-	public void handleGreatestPosition() {
+	public void handleGreatestPosition() throws InvalidArgumentException{
 		str = getStringFromUser();
 		char choice = 'y';
 		while (choice == 'y') {
@@ -283,7 +286,7 @@ public class StringRunner {
 		}
 	}
 
-	public void handleCountOfChar() {
+	public void handleCountOfChar()throws InvalidArgumentException {
 		str = getStringFromUser();
 		char choice = 'y';
 		while (choice == 'y') {
@@ -295,14 +298,14 @@ public class StringRunner {
 		}
 	}
 
-	public void handleCharAtPos() throws StringTaskException {
+	public void handleCharAtPos() throws StringTaskException,InvalidArgumentException {
 		str = getStringFromUser();
 		n = getIntFromUser();
 		char posChar = task.charAtPos(str, n);
 		System.out.println("The character at position " + n + " of the string " + str + " is " + posChar);
 	}
 
-	public void handleCharArray() {
+	public void handleCharArray()throws InvalidArgumentException {
 		str = getStringFromUser();
 		char[] charArray = task.convertToCharArray(str);
 		System.out.println(str + " on converting to character array... ");
@@ -312,8 +315,8 @@ public class StringRunner {
 		System.out.println();
 	}
 
-	public void handleLength(String strArr[]) {
-		ValidateArgs.checkObjArgIsNull(strArr);
+	public void handleLength(String strArr[])throws InvalidArgumentException {
+		GeneralUtils.checkObjArgIsNull(strArr);
 		if (strArr.length > 0) {
 			int length = task.findLength(strArr[0]);
 			System.out.println("The length of the string " + strArr[0] + " = " + length);
