@@ -35,4 +35,69 @@ public class GeneralUtils{
 		GeneralUtils.checkObjArgIsNull(merger);
 		return String.join(merger, strArr);
 	}
+	
+	public static int findStartIndex (int operationAt , String delimiter , StringBuilder strBuilder,Boolean isInsert)
+	throws InvalidArgumentException,BoundaryCheckException{
+		GeneralUtils.checkObjArgIsNull(strBuilder);
+		if (operationAt < 1){
+			throw new BoundaryCheckException("The string to operate cannot be negative");
+		}
+		int count = 0;
+		int startIndex = 0;
+		int delimiterLength = GeneralUtils.findLength(delimiter);
+		int index = strBuilder.indexOf(delimiter , startIndex);
+		int flag = 0;//to check operationAt is greater than no.of strings
+		if(isInsert){
+			operationAt++;
+		}
+		while(index!= -1){
+			count++;
+			if(count == operationAt){
+				flag =1;
+				break;
+			}
+			startIndex = index+delimiterLength;
+			index = strBuilder.indexOf(delimiter , startIndex);
+		}
+		if(!isInsert && flag == 0){
+			throw new BoundaryCheckException("String number is greater than the number of strings ");
+		}
+		return startIndex;
+	}
+	
+	public static int findEndIndex (int startIndex,String delimiter,StringBuilder strBuilder)
+	throws InvalidArgumentException{
+		GeneralUtils.checkObjArgIsNull(strBuilder);
+		GeneralUtils.checkObjArgIsNull(delimiter);
+		int eofDelimiter = strBuilder.indexOf(delimiter,startIndex)+GeneralUtils.findLength(delimiter);
+		int endIndex = startIndex+(eofDelimiter-startIndex);
+		return endIndex;
+	}
+	
+	public static int findIndexInStrBuilder ( String str,StringBuilder strBuilder, Boolean isFirst)
+	throws InvalidArgumentException{
+		GeneralUtils.checkObjArgIsNull(str);
+		GeneralUtils.checkObjArgIsNull(strBuilder);
+		if(isFirst){
+			return strBuilder.indexOf(str);
+		}
+		return strBuilder.lastIndexOf(str);
+	}
+	
+	public static StringBuilder deleteInStrBuilder (int startIndex ,int endIndex,StringBuilder strBuilder)
+	throws InvalidArgumentException,BoundaryCheckException{
+		int strBuilderLength = GeneralUtils.findLength(strBuilder);
+		GeneralUtils.boundaryCheck(startIndex, 0 , strBuilderLength-1);
+		GeneralUtils.boundaryCheck(endIndex ,startIndex+1 ,strBuilderLength);
+		return strBuilder.delete(startIndex,endIndex);
+	}
+	
+	public static StringBuilder replaceInStrBuilder (int startIndex ,int endIndex, String replaceWith,StringBuilder strBuilder)
+	throws InvalidArgumentException,BoundaryCheckException{
+		GeneralUtils.checkObjArgIsNull(replaceWith);
+		int strBuilderLength = GeneralUtils.findLength(strBuilder);
+		GeneralUtils.boundaryCheck(startIndex, 0 , strBuilderLength-1);
+		GeneralUtils.boundaryCheck(endIndex ,startIndex+1 ,strBuilderLength);
+		return strBuilder.replace(startIndex,endIndex,replaceWith);
+	}
 }
