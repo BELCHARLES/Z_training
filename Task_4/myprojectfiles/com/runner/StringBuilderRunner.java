@@ -43,27 +43,38 @@ public class StringBuilderRunner{
 		return arrList;
 	}
 	
+	public StringBuilder getStringBuilder(StringBuilder strBuilder ,ArrayList<String> strArr,String delimiter)
+	throws InvalidArgumentException{
+		int length = strArr.size();
+		for(int i=0;i<length;i++){
+			strBuilder = task.appendWithDelimiter(strBuilder,delimiter,strArr.get(i));
+		}
+		return strBuilder;
+	}
+	
 	public StringBuilder createStringBuilderWithStrings(Scanner sc,String delimiter,int minLength)
 	throws InvalidArgumentException{ 
 		StringBuilderRunner runner = new StringBuilderRunner();
 		ArrayList <String> strArr = runner.getStringFromUser(sc);
+		StringBuilder strBuilder = task.getStringBuilder();
+		strBuilder = runner.getStringBuilder(strBuilder,strArr,delimiter);
 		if( minLength == -1){
-			return task.getStringBuilder(strArr,delimiter);
+			return strBuilder;
 		}
-		String str = GeneralUtils.join(delimiter,strArr);
-		while(GeneralUtils.findLength(str) < minLength){
+		while(GeneralUtils.findLength(strBuilder) < minLength){
+			strArr.clear();
 			System.out.print("Enter string to satisfy minLength: ");
 			strArr.add(sc.nextLine());
-			str = GeneralUtils.join(delimiter,strArr);
+			strBuilder = runner.getStringBuilder(strBuilder,strArr,delimiter);
 		}
-		return task.getStringBuilder(strArr,delimiter);
+		return strBuilder;
 	}
 	
 	public StringBuilder addStringToStrBuilder (Scanner sc,String delimiter , StringBuilder strBuilder)
 	throws InvalidArgumentException{
 		StringBuilderRunner runner = new StringBuilderRunner();
 		ArrayList <String> arrList = runner.getStringFromUser(sc);
-		return task.appendWithDelimiter(strBuilder,delimiter,arrList);
+		return runner.getStringBuilder(strBuilder,arrList,delimiter);
 	}
 	
 	public void printStrBuilderAndLength(StringBuilder strBuilder)
@@ -178,7 +189,7 @@ public class StringBuilderRunner{
 		runner.printStrBuilderAndLength(strBuilder);
 		char choice = 'y';
 		while(choice == 'y'){
-			System.out.println("Enter the string to find the index(fromFirst: "+isFirst+" ):");
+			System.out.print("Enter the string to find the index(fromFirst: "+isFirst+" ):");
 			String str = sc.nextLine();
 			int index = task.findIndex(str ,strBuilder,isFirst);
 			if ( index == -1){
