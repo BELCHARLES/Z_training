@@ -25,7 +25,8 @@ public class StringBuilderTask{
 	throws InvalidArgumentException,StringBuilderException {
 		try{
 			GeneralUtils.checkObjArgIsNull(insertText);
-			int insertAt = GeneralUtils.findStartIndex(insertAfter , delimiter , strBuilder,true);
+//pls check		
+		int insertAt = GeneralUtils.findStartIndex(insertAfter , delimiter , strBuilder,true);
 			return strBuilder.insert(insertAt, insertText + delimiter);
 		}
 		catch(BoundaryCheckException e){
@@ -43,16 +44,16 @@ public class StringBuilderTask{
 		}
 	}
 	
-	public StringBuilder deleteString(int deleteStrAt,String delimiter,StringBuilder strBuilder)
+	public StringBuilder delete(int deleteStrAt,String delimiter,StringBuilder strBuilder)
 	throws InvalidArgumentException,StringBuilderException{
 		try{
 			int startIndex = GeneralUtils.findStartIndex(deleteStrAt,delimiter,strBuilder,false);
 			int endIndex = GeneralUtils.findEndIndex(startIndex,delimiter,strBuilder);
-			return GeneralUtils.deleteInStrBuilder(startIndex,endIndex,strBuilder);
+			return delete(startIndex,endIndex,strBuilder);
 		}
 		catch(BoundaryCheckException e){
-			throw new StringBuilderException("The string to delete is not within expected range",e);
-		}
+			throw new StringBuilderException("String to operate is out of range",e);
+		}	
 	}
 	
 	public StringBuilder replace (int startIndex ,int endIndex, String replaceWith,StringBuilder strBuilder)
@@ -65,21 +66,16 @@ public class StringBuilderTask{
 		}
 	}
 	
-	public StringBuilder replaceString(String toReplace , String replaceWith , StringBuilder strBuilder)
+	public StringBuilder replace(String toReplace , String replaceWith , StringBuilder strBuilder)
 	throws InvalidArgumentException,StringBuilderException{
-		try{
-			int toReplaceLength = GeneralUtils.findLength(toReplace);
-			int startIndex = GeneralUtils.findIndexInStrBuilder(toReplace,strBuilder,true);
-			while ( startIndex != -1){
-				int endIndex = startIndex + toReplaceLength;
-				strBuilder = GeneralUtils.replaceInStrBuilder(startIndex,endIndex,replaceWith,strBuilder);
-				startIndex = GeneralUtils.findIndexInStrBuilder(toReplace,strBuilder,true);
-			}
-			return strBuilder;
+		int toReplaceLength = GeneralUtils.findLength(toReplace);
+		int startIndex = GeneralUtils.findIndexInStrBuilder(toReplace,strBuilder,true);
+		while ( startIndex != -1){
+			int endIndex = startIndex + toReplaceLength;
+			strBuilder = replace(startIndex,endIndex,replaceWith,strBuilder);
+			startIndex = findIndex(toReplace,strBuilder,true);
 		}
-		catch(BoundaryCheckException e){
-			throw new StringBuilderException("StartIndex range(inclusive): 0 to strBuilderLength-1\nEndIndex range(inclusive):startIndex to strBuilderLength",e);
-		}
+		return strBuilder;
 	}
 	
 	public StringBuilder reverse (StringBuilder strBuilder)
