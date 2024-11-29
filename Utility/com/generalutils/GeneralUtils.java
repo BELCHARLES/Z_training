@@ -38,31 +38,30 @@ public class GeneralUtils{
 	
 	public static int findStartIndex (int operationAt , String delimiter , StringBuilder strBuilder,Boolean isInsert)
 	throws InvalidArgumentException,BoundaryCheckException{
-		GeneralUtils.checkObjArgIsNull(strBuilder);
+		GeneralUtils.checkObjArgIsNull(delimiter);
 		if (operationAt < 1){
 			throw new BoundaryCheckException("The string to operate cannot be negative");
 		}
 		int count = 0;
-		int startIndex = 0;
-		int delimiterLength = GeneralUtils.findLength(delimiter);
-		int index = strBuilder.indexOf(delimiter , startIndex);
-		int flag = 0;//to check operationAt is greater than no.of strings
-		if(isInsert){
-			operationAt++;
-		}
-		while(index!= -1){
-			count++;
-			if(count == operationAt){
-				flag =1;
-				break;
+		int delIndex=0;
+		char delimiterChar = delimiter.charAt(0); 
+		int length = GeneralUtils.findLength(strBuilder);
+		for(int i =0 ; i<length ; i++){
+			if(strBuilder.charAt(i)== delimiterChar){
+				count++;
+				if(count == operationAt){
+					if (isInsert) {
+						return i + 1;
+					}
+					return delIndex;
+				}
+				delIndex = i+1;
 			}
-			startIndex = index+delimiterLength;
-			index = strBuilder.indexOf(delimiter , startIndex);
 		}
-		if(!isInsert && flag == 0){
-			throw new BoundaryCheckException("String number is greater than the number of strings ");
-		}
-		return startIndex;
+		if (!isInsert && count < operationAt) {
+			throw new BoundaryCheckException("The position to operate exceeds the number of strings	");
+        }
+		return length;	
 	}
 	
 	public static int findEndIndex (int startIndex,String delimiter,StringBuilder strBuilder)
@@ -101,3 +100,23 @@ public class GeneralUtils{
 		return strBuilder.replace(startIndex,endIndex,replaceWith);
 	}
 }
+
+//startindex logic for string delimiter
+//int count = 0;
+//		int startIndex = 0;
+//		int delimiterLength = GeneralUtils.findLength(delimiter);
+//		int index = strBuilder.indexOf(delimiter , startIndex);
+//		int flag = 0;//to check operationAt is greater than no.of strings
+//		while(index!= -1){
+//			count++;
+//			if(count == operationAt){
+//				flag =1;
+//				break;
+//			}
+//			startIndex = index+delimiterLength;
+//			index = strBuilder.indexOf(delimiter , startIndex);
+//		}
+//		if(!isInsert && flag == 0){
+//			throw new BoundaryCheckException("String number is greater than the number of strings ");
+//		}
+//		return startIndex;

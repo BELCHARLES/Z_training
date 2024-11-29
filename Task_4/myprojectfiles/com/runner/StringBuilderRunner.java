@@ -54,10 +54,9 @@ public class StringBuilderRunner{
 	
 	public StringBuilder createStringBuilderWithStrings(Scanner sc,String delimiter,int minLength)
 	throws InvalidArgumentException{ 
-		StringBuilderRunner runner = new StringBuilderRunner();
-		ArrayList <String> strArr = runner.getStringFromUser(sc);
+		ArrayList <String> strArr = getStringFromUser(sc);
 		StringBuilder strBuilder = task.getStringBuilder();
-		strBuilder = runner.getStringBuilder(strBuilder,strArr,delimiter);
+		strBuilder = getStringBuilder(strBuilder,strArr,delimiter);
 		if( minLength == -1){
 			return strBuilder;
 		}
@@ -65,16 +64,15 @@ public class StringBuilderRunner{
 			strArr.clear();
 			System.out.print("Enter string to satisfy minLength: ");
 			strArr.add(sc.nextLine());
-			strBuilder = runner.getStringBuilder(strBuilder,strArr,delimiter);
+			strBuilder = getStringBuilder(strBuilder,strArr,delimiter);
 		}
 		return strBuilder;
 	}
 	
 	public StringBuilder addStringToStrBuilder (Scanner sc,String delimiter , StringBuilder strBuilder)
 	throws InvalidArgumentException{
-		StringBuilderRunner runner = new StringBuilderRunner();
-		ArrayList <String> arrList = runner.getStringFromUser(sc);
-		return runner.getStringBuilder(strBuilder,arrList,delimiter);
+		ArrayList <String> arrList = getStringFromUser(sc);
+		return getStringBuilder(strBuilder,arrList,delimiter);
 	}
 	
 	public void printStrBuilderAndLength(StringBuilder strBuilder)
@@ -90,29 +88,30 @@ public class StringBuilderRunner{
 	}
 	
 	//task handling methods
-	public void createAndAppendStringBuilder(Scanner sc,StringBuilderRunner runner)
+	public void createAndAppendStringBuilder(Scanner sc)
 	throws InvalidArgumentException{
-		String delimiter = runner.getDelimiter(sc);
+		String delimiter =getDelimiter(sc);
 		StringBuilder strBuilder = task.getStringBuilder();
-		System.out.println("Initial stringbuilder is empty and its length is "+GeneralUtils.findLength(strBuilder));
-		strBuilder = runner.addStringToStrBuilder(sc,delimiter,strBuilder);
-		runner.printStrBuilderAndLength(strBuilder);
+		System.out.println("Initial stringbuilder");
+		printStrBuilderAndLength(strBuilder);
+		strBuilder = addStringToStrBuilder(sc,delimiter,strBuilder);
+		printStrBuilderAndLength(strBuilder);
 	}
 	
-	public  void createAndAddMultipleStrings (Scanner sc,StringBuilderRunner runner )
+	public  void createAndAddMultipleStrings (Scanner sc)
 	throws InvalidArgumentException{
-		String delimiter = runner.getDelimiter(sc);
-		StringBuilder strBuilder = runner.createStringBuilderWithStrings(sc,delimiter,-1);
-		runner.printStrBuilderAndLength(strBuilder);
-		strBuilder = runner.addStringToStrBuilder(sc,delimiter,strBuilder);
-		runner.printStrBuilderAndLength(strBuilder);	
+		String delimiter = getDelimiter(sc);
+		StringBuilder strBuilder = createStringBuilderWithStrings(sc,delimiter,-1);
+		printStrBuilderAndLength(strBuilder);
+		strBuilder = addStringToStrBuilder(sc,delimiter,strBuilder);
+		printStrBuilderAndLength(strBuilder);	
 	}
 	
-	public void insertString (Scanner sc,StringBuilderRunner runner) 
+	public void insertString (Scanner sc) 
 	throws InvalidArgumentException,StringBuilderException{
-		String delimiter = runner.getDelimiter(sc);
-		StringBuilder strBuilder = runner.createStringBuilderWithStrings(sc,delimiter,-1);
-		runner.printStrBuilderAndLength(strBuilder);
+		String delimiter = getDelimiter(sc);
+		StringBuilder strBuilder = createStringBuilderWithStrings(sc,delimiter,-1);
+		printStrBuilderAndLength(strBuilder);
 		char choice = 'y';
 		while(choice == 'y'){
 			System.out.print("Enter the number after which string should we insert: ");
@@ -121,27 +120,27 @@ public class StringBuilderRunner{
 			System.out.print("Enter the string: ");
 			String str = sc.nextLine();
 			strBuilder = task.insertString(insertAfter,delimiter,str,strBuilder);
-			runner.printStrBuilderAndLength(strBuilder);
+			printStrBuilderAndLength(strBuilder);
 			System.out.print("Do you want to insert another string (Enter y for yes/n for no):");
 			choice = sc.next().charAt(0);
 			sc.nextLine();
 		}
-		runner.printStrBuilderAndLength(strBuilder);
+		printStrBuilderAndLength(strBuilder);
 	}
 	
-	public void deleteString(Scanner sc,StringBuilderRunner runner)
+	public void deleteString(Scanner sc)
 	throws InvalidArgumentException,StringBuilderException{
-		String delimiter = runner.getDelimiter(sc);
-		StringBuilder strBuilder = runner.createStringBuilderWithStrings(sc,delimiter,-1);
-		runner.printStrBuilderAndLength(strBuilder);
+		String delimiter = getDelimiter(sc);
+		StringBuilder strBuilder = createStringBuilderWithStrings(sc,delimiter,-1);
+		printStrBuilderAndLength(strBuilder);
 		
 		char choice = 'y';
 		while(choice == 'y'){
 			System.out.print("Enter the string number to delete: ");
 			int deleteStrAt = sc.nextInt();
 			sc.nextLine();
-			strBuilder = task.deleteString(deleteStrAt,delimiter,strBuilder);
-			runner.printStrBuilderAndLength(strBuilder);
+			strBuilder = task.delete(deleteStrAt,delimiter,strBuilder);
+			printStrBuilderAndLength(strBuilder);
 			if(GeneralUtils.findLength(strBuilder)==0){
 				System.out.println("String builder ran out of strings");
 				break;
@@ -150,43 +149,43 @@ public class StringBuilderRunner{
 			choice = sc.next().charAt(0);
 			sc.nextLine();
 		}
-		runner.printStrBuilderAndLength(strBuilder);
+		printStrBuilderAndLength(strBuilder);
 	}
 	
-	public void replaceString(Scanner sc,StringBuilderRunner runner)
+	public void replaceString(Scanner sc)
 	throws InvalidArgumentException,StringBuilderException{
-		String delimiter = runner.getDelimiter(sc);
-		StringBuilder strBuilder = runner.createStringBuilderWithStrings(sc,delimiter,-1);
-		runner.printStrBuilderAndLength(strBuilder);
+		String delimiter = getDelimiter(sc);
+		StringBuilder strBuilder = createStringBuilderWithStrings(sc,delimiter,-1);
+		printStrBuilderAndLength(strBuilder);
 		char choice = 'y';
 		while(choice == 'y'){
 			System.out.print("Enter the string to replace: ");
 			String toReplace = sc.nextLine();
 			System.out.print("Enter the string to replace "+toReplace+" with :");
 			String replaceWith = sc.nextLine();
-			strBuilder = task.replaceString(toReplace,replaceWith,strBuilder);
-			runner.printStrBuilderAndLength(strBuilder);
+			strBuilder = task.replace(toReplace,replaceWith,strBuilder);
+			printStrBuilderAndLength(strBuilder);
 			System.out.print("Do you want to replace another string (Enter y for yes/n for no):");
 			choice = sc.next().charAt(0);
 			sc.nextLine();
 		}
-		runner.printStrBuilderAndLength(strBuilder);
+		printStrBuilderAndLength(strBuilder);
 	}
 	
-	public void reverse(Scanner sc,StringBuilderRunner runner)
+	public void reverse(Scanner sc)
 	throws InvalidArgumentException{
-		String delimiter = runner.getDelimiter(sc);
-		StringBuilder strBuilder = runner.createStringBuilderWithStrings(sc,delimiter,-1);
-		runner.printStrBuilderAndLength(strBuilder);
+		String delimiter = getDelimiter(sc);
+		StringBuilder strBuilder = createStringBuilderWithStrings(sc,delimiter,-1);
+		printStrBuilderAndLength(strBuilder);
 		strBuilder = task.reverse(strBuilder);
-		runner.printStrBuilderAndLength(strBuilder);
+		printStrBuilderAndLength(strBuilder);
 	}
 	
-	public void findIndex(Scanner sc,StringBuilderRunner runner,Boolean isFirst)
+	public void findIndex(Scanner sc,Boolean isFirst)
 	throws InvalidArgumentException{
-		String delimiter = runner.getDelimiter(sc);
-		StringBuilder strBuilder = runner.createStringBuilderWithStrings(sc,delimiter,-1);
-		runner.printStrBuilderAndLength(strBuilder);
+		String delimiter = getDelimiter(sc);
+		StringBuilder strBuilder = createStringBuilderWithStrings(sc,delimiter,-1);
+		printStrBuilderAndLength(strBuilder);
 		char choice = 'y';
 		while(choice == 'y'){
 			System.out.print("Enter the string to find the index(fromFirst: "+isFirst+" ):");
@@ -204,16 +203,16 @@ public class StringBuilderRunner{
 		}
 	}
 	
-	public void deleteChars(Scanner sc,StringBuilderRunner runner)throws InvalidArgumentException,StringBuilderException{
-		String delimiter = runner.getDelimiter(sc);
+	public void deleteChars(Scanner sc)throws InvalidArgumentException,StringBuilderException{
+		String delimiter = getDelimiter(sc);
 		System.out.print("Enter the minimum number of string length to create the string builder: ");
 		int minLength = sc.nextInt();
 		sc.nextLine();
 		if ( minLength < 0){
 			throw new StringBuilderException("Minimum Length can't be negative");
 		}
-		StringBuilder strBuilder = runner.createStringBuilderWithStrings(sc,delimiter,minLength);
-		runner.printStrBuilderAndLength(strBuilder);
+		StringBuilder strBuilder = createStringBuilderWithStrings(sc,delimiter,minLength);
+		printStrBuilderAndLength(strBuilder);
 		System.out.print("Enter the start index (inclusive): ");
 		int startIndex = sc.nextInt();
 		sc.nextLine();
@@ -221,19 +220,19 @@ public class StringBuilderRunner{
 		int endIndex = sc.nextInt();
 		sc.nextLine();
 		strBuilder = task.delete(startIndex,endIndex,strBuilder);
-		runner.printStrBuilderAndLength(strBuilder);
+		printStrBuilderAndLength(strBuilder);
 	}
 	
-	public void replaceChars(Scanner sc,StringBuilderRunner runner)throws InvalidArgumentException,StringBuilderException{
-		String delimiter = runner.getDelimiter(sc);
+	public void replaceChars(Scanner sc)throws InvalidArgumentException,StringBuilderException{
+		String delimiter = getDelimiter(sc);
 		System.out.print("Enter the minimum number of string length to create the string builder: ");
 		int minLength = sc.nextInt();
 		sc.nextLine();
 		if ( minLength < 0){
 			throw new StringBuilderException("Minimum Length can't be negative");
 		}
-		StringBuilder strBuilder = runner.createStringBuilderWithStrings(sc,delimiter,minLength);
-		runner.printStrBuilderAndLength(strBuilder);
+		StringBuilder strBuilder = createStringBuilderWithStrings(sc,delimiter,minLength);
+		printStrBuilderAndLength(strBuilder);
 		System.out.print("Enter the start index to replace(inclusive): ");
 		int startIndex = sc.nextInt();
 		sc.nextLine();
@@ -243,7 +242,7 @@ public class StringBuilderRunner{
 		System.out.print("Enter the string to replace:");
 		String replaceWith = sc.nextLine();
 		strBuilder = task.replace(startIndex,endIndex,replaceWith,strBuilder);
-		runner.printStrBuilderAndLength(strBuilder);
+		printStrBuilderAndLength(strBuilder);
 	}
 	
 	public static void main (String args[]){
@@ -264,34 +263,34 @@ public class StringBuilderRunner{
 				try{
 					switch(choice){
 						case 1:
-							runner.createAndAppendStringBuilder(sc,runner);
+							runner.createAndAppendStringBuilder(sc);
 							break;
 						case 2:
-							runner.createAndAddMultipleStrings(sc,runner);
+							runner.createAndAddMultipleStrings(sc);
 							break;
 						case 3:
-							runner.insertString(sc,runner);
+							runner.insertString(sc);
 							break;
 						case 4:
-							runner.deleteString(sc,runner);
+							runner.deleteString(sc);
 							break;
 						case 5:
-							runner.replaceString(sc,runner);
+							runner.replaceString(sc);
 							break;
 						case 6:
-							runner.reverse(sc,runner);
+							runner.reverse(sc);
 							break;
 						case 7:
-							runner.deleteChars(sc,runner);
+							runner.deleteChars(sc);
 							break;
 						case 8:
-							runner.replaceChars(sc,runner);
+							runner.replaceChars(sc);
 							break;
 						case 9:
-							runner.findIndex(sc,runner,true);
+							runner.findIndex(sc,true);
 							break;
 						case 10:
-							runner.findIndex(sc,runner,false);
+							runner.findIndex(sc,false);
 							break;
 						
 					}
