@@ -5,6 +5,8 @@ import com.validator.BoundaryCheckException;
 import com.invalidargumentexception.InvalidArgumentException;
 import com.generalutils.GeneralUtils;
 
+import java.util.ArrayList;
+
 public class StringTask {
 	public int findLength(String str) throws InvalidArgumentException {
 		return GeneralUtils.findLength(str);
@@ -116,7 +118,7 @@ public class StringTask {
 	}
 
 	public String[] split(String str, String delimeter)throws InvalidArgumentException {
-		return GeneralUtils.split(str,delimiter);
+		return GeneralUtils.split(str,delimeter);
 	}
 
 	public String mergeStrWithChar(ArrayList<String> strArr, String merger)throws InvalidArgumentException {

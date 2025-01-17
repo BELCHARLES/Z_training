@@ -1,6 +1,8 @@
 package com.generalutils;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.ArrayList; 
+import java.util.Map;
 import com.validator.BoundaryCheckException;
 import com.invalidargumentexception.InvalidArgumentException;
 
@@ -19,9 +21,14 @@ public class GeneralUtils{
 		}
 	}
 	
-	public static int findLength(CharSequence cs) throws InvalidArgumentException{
-        checkObjArgIsNull(cs);
-        return cs.length();
+	public static int findLength(Object obj) throws InvalidArgumentException{
+        checkObjArgIsNull(obj);
+		if (obj instanceof CharSequence) {
+			return ((CharSequence) obj).length();
+		} else if (obj instanceof Collection) { 
+			return ((Collection<?>) obj).size();
+		}
+		return ((Map <?,?>)obj).size(); 
     }
 	
 	public static  String[] split(String str, String delimeter)throws InvalidArgumentException {
