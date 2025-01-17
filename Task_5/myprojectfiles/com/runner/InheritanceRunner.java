@@ -99,6 +99,7 @@ public class InheritanceRunner{
 		obj.setYearOfMake((int)attributes[0]);
 		obj.setEngineNumber((String)attributes[1]);
 		obj.setType((String)attributes[2]);
+		
 		attributes = getDerivedAttributes(sc);
 		obj.setAirBags((int)attributes[0]); 
 		obj.setSeats((int)attributes[1]);

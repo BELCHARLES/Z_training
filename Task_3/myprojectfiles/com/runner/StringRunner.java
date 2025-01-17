@@ -7,15 +7,12 @@ import com.generalutils.GeneralUtils;
 
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 public class StringRunner {
 
 	private StringTask task = new StringTask();
 	private static Scanner sc = new Scanner(System.in);
-	// for storing user inputs
-	private String str;
-	private char letter;
-	private int n;
 
 	public void printChoiceList() {
 		System.out.println("\nS.no Functions");
@@ -144,7 +141,7 @@ public class StringRunner {
 		return sc.nextLine();
 	}
 
-	public static List getMulStrFromUser() {
+	public static ArrayList getMulStrFromUser() {
 		ArrayList<String> stringList = new ArrayList<>();
 		char choice = 'y';
 		while (choice == 'y') {
@@ -170,7 +167,7 @@ public class StringRunner {
 	}
 
 	public void handleTrimExtraSpace()throws InvalidArgumentException {
-		str = getSentenceFromUser();
+		String str = getSentenceFromUser();
 		System.out.println("The string before trimming : \"" + str + "\"");
 		System.out.println("The length of the string before trimming: " + task.findLength(str));
 		str = task.trimExtraSpace(str);
@@ -193,7 +190,7 @@ public class StringRunner {
 	}
 
 	public void handleSplit() throws InvalidArgumentException{
-		str = getSentenceFromUser();
+		String str = getSentenceFromUser();
 		System.out.println("Enter the delimeter to split the strings:");
 		String str1 = getStringFromUser();
 		String strArr[] = task.split(str, str1);
@@ -201,12 +198,12 @@ public class StringRunner {
 	}
 
 	public void handleAcceptMultipleString() {
-		str = getSentenceFromUser();
+		String str = getSentenceFromUser();
 		System.out.println("You entered: " + str);
 	}
 
 	public void handleConcWithoutGivenChar() throws InvalidArgumentException{
-		str = getSentenceFromUser();
+		String str = getSentenceFromUser();
 		System.out.println("Enter the string to be removed:");
 		String str1 = getStringFromUser();
 		System.out.println("Enter the string to replce with :");
@@ -216,18 +213,18 @@ public class StringRunner {
 	}
 
 	public void handleReverseString() throws InvalidArgumentException {
-		str = getStringFromUser();
+		String str = getStringFromUser();
 		System.out.println(str + "->" + task.reverseString(str));
 	}
 
 
 	public void handleChangeCase(boolean toUpper)throws InvalidArgumentException {
-		str = getStringFromUser();
+		String str = getStringFromUser();
 		System.out.println(str + "->" + task.changeCase(str,toUpper));
 	}
 
 	public void handleCheckEndsWith()throws InvalidArgumentException {
-		str = getStringFromUser();
+		String str = getStringFromUser();
 		System.out.println("Enter the string to check for:");
 		String ender = getStringFromUser();
 		boolean ans = task.checkEndsWith(str, ender);
@@ -235,7 +232,7 @@ public class StringRunner {
 	}
 
 	public void handleCheckStartsWith()throws InvalidArgumentException {
-		str = getStringFromUser();
+		String str = getStringFromUser();
 		System.out.println("Enter the string to check for:");
 		String starter = getStringFromUser();
 		boolean ans = task.checkStartsWith(str, starter);
@@ -243,9 +240,9 @@ public class StringRunner {
 	}
 
 	public void handleReplaceFirstNChar() throws StringTaskException,InvalidArgumentException{
-		str = getStringFromUser();
+		String str = getStringFromUser();
 		System.out.println("Enter the number of characters");
-		n = getIntFromUser();
+		int n = getIntFromUser();
 		System.out.println("Enter the string to be replaced with:");
 		String repStr = getStringFromUser();
 		String outputStr = task.replaceFirstNChar(str, n, repStr);
@@ -254,26 +251,26 @@ public class StringRunner {
 	}
 
 	public void handlePrintFirstNChar() throws StringTaskException,InvalidArgumentException{
-		str = getStringFromUser();
+		String str = getStringFromUser();
 		System.out.println("Enter the number of characters");
-		n = getIntFromUser();
+		int n = getIntFromUser();
 		String outputStr = task.getFirstNChar(str, n);
 		System.out.println("The first " + n + " characters of the string " + str + " is " + outputStr);
 	}
 
 	public void handlePrintLastNChar() throws StringTaskException,InvalidArgumentException{
-		str = getStringFromUser();
+		String str = getStringFromUser();
 		System.out.println("Enter the number of characters");
-		n = getIntFromUser();
+		int n = getIntFromUser();
 		String outputStr = task.getLastNChar(str, n);
 		System.out.println("The last " + n + " characters of the string " + str + " is " + outputStr);
 	}
 
 	public void handleGreatestPosition() throws InvalidArgumentException{
-		str = getStringFromUser();
+		String str = getStringFromUser();
 		char choice = 'y';
 		while (choice == 'y') {
-			letter = getCharFromUser();
+			char letter = getCharFromUser();
 			int index = task.greatestPosOfChar(str, letter);
 			if (index != -1) {
 				System.out.println(
@@ -287,10 +284,10 @@ public class StringRunner {
 	}
 
 	public void handleCountOfChar()throws InvalidArgumentException {
-		str = getStringFromUser();
+		String str = getStringFromUser();
 		char choice = 'y';
 		while (choice == 'y') {
-			letter = getCharFromUser();
+			char letter = getCharFromUser();
 			int count = task.countOfChar(str, letter);
 			System.out.println("The  number of occurrences of " + letter + " in the string " + str + " is " + count);
 			System.out.print("Do you want to check for another letter/character (Enter 'y' for yes and 'n' for no) :");
@@ -299,14 +296,14 @@ public class StringRunner {
 	}
 
 	public void handleCharAtPos() throws StringTaskException,InvalidArgumentException {
-		str = getStringFromUser();
-		n = getIntFromUser();
+		String str = getStringFromUser();
+		int n = getIntFromUser();
 		char posChar = task.charAtPos(str, n);
 		System.out.println("The character at position " + n + " of the string " + str + " is " + posChar);
 	}
 
 	public void handleCharArray()throws InvalidArgumentException {
-		str = getStringFromUser();
+		String str = getStringFromUser();
 		char[] charArray = task.convertToCharArray(str);
 		System.out.println(str + " on converting to character array... ");
 		for (char c : charArray) {
