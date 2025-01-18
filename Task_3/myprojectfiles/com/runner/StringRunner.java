@@ -141,7 +141,7 @@ public class StringRunner {
 		return sc.nextLine();
 	}
 
-	public static ArrayList getMulStrFromUser() {
+	public static ArrayList<String> getMulStrFromUser() {
 		ArrayList<String> stringList = new ArrayList<>();
 		char choice = 'y';
 		while (choice == 'y') {
