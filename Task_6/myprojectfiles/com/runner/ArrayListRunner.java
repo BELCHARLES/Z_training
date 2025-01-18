@@ -14,31 +14,7 @@ import java.util.ArrayList;
 public class ArrayListRunner{
 	
 	private ArrayListTask task = new ArrayListTask();
-	
-	private List<String> stringList;
-	private List<String> stringList1;
-	private List<String> stringList2;
-	private List<Integer> integerList;
-	private List<CustomClass> customList;
-	private List<Object> objList;
-	private List<Float> floatList;
-	private List<Long> longList;
-	
-	private int num,count1,count2,count3,ind,from,to;
-	private float val;
-	private String str;
-	private char choice;
-	
-	private CustomClass customObjects[];
-	private String strArr[];
-	private Integer intArr[];
-	private Object objArr[];
-	private Float floatArr[];
-	private Long longArr[];
-	
-	
-	private Iterator<String> strIterator;
-	
+
 	//helper methods
 	
 	private void printChoiceList(){
@@ -218,6 +194,7 @@ public class ArrayListRunner{
 		System.out.print("Enter 1 for list1+list2 / 0 for list2+list1: ");
 		int num = sc.nextInt();
 		sc.nextLine();
+		List<String> stringList;
 		if(num == 1){
 			stringList = task.combineLists(stringList1,stringList2);
 		}
