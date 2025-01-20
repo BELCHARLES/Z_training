@@ -7,6 +7,6 @@ public class CustomClass{
 	}
 	
 	public String toString(){
-		return this.name;
+		return "Object name:"+this.name;
 	}
 } 
