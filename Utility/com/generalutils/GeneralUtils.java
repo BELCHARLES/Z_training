@@ -27,9 +27,20 @@ public class GeneralUtils{
 			return ((CharSequence) obj).length();
 		} else if (obj instanceof Collection) { 
 			return ((Collection<?>) obj).size();
+		} else if (obj instanceof Map) {
+			return ((Map<?, ?>) obj).size();
+		} else {
+			throw new InvalidArgumentException("Unsupported object type: " + obj.getClass());
 		}
-		return ((Map <?,?>)obj).size(); 
     }
+	
+	public static <K,V> void checkSameLength(K[]arr1 , V[]arr2)throws InvalidArgumentException{
+		GeneralUtils.checkObjArgIsNull(arr1);
+		GeneralUtils.checkObjArgIsNull(arr2);
+		if(arr1.length != arr2.length){
+			throw new InvalidArgumentException("Given arrays of not same length");
+		}
+	}
 	
 	public static  String[] split(String str, String delimeter)throws InvalidArgumentException {
 		GeneralUtils.checkObjArgIsNull(str);
